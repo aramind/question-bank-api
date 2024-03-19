@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
+const userRouter = require("./routes/userRouter");
 // env
 dotenv.config();
 
@@ -11,6 +12,14 @@ const PORT = process.env.PORT || 5000;
 const DB = process.env.MONGO_CONNECT;
 
 const app = express();
+
+// routers
+app.use("/users", userRouter);
+
+// if not found
+app.use((req, res) =>
+  res.status(404).json({ success: false, message: "Not found" })
+);
 
 app.use(helmet());
 app.use(express.json());
