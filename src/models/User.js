@@ -7,11 +7,16 @@ const NameSchema = new Schema({
   middleName: { type: String },
 });
 const UserSchema = new Schema({
-  userName: { type: String, required: true },
+  username: { type: String, required: true },
   password: { type: String, required: true },
-  employeeNumber: { type: String, required: true },
-  name: { type: NameSchema },
-  role: { type: Number, required: true, enum: [0, 1, 2, 3, 4, 5] }, // 0 - super, 1-admin, 2 - editor, 3-premium user, 4 - public user
+  employeeId: { type: String, required: true },
+  name: {
+    lastName: { type: String, required: true },
+    firstName: { type: String, required: true },
+    middleName: { type: String },
+  },
+  role: { type: String, required: true },
+  status: { type: String, required: true },
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -22,9 +27,29 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre("save", function (next) {
-  this.updatedAt = new Date();
-  next();
+UserSchema.pre("save", async function (next) {
+  try {
+    const existingUser = await mongoose.models.User.findOne({
+      employeeId: this.employeeId,
+    });
+    if (existingUser) {
+      throw new Error("Employee already included");
+      next();
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = mongoose.model("User", UserSchema);
+
+//   try {
+//     const existingUser = await mongoose.models.User.findOne({
+//     employeeId: this.employeeId,
+//   })
+//   if (existingUser) {
+//     throw new Error("Employee already included");
+//   } catch (error) {
+//     next(error)
+//   }
+// });
