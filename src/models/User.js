@@ -34,22 +34,14 @@ UserSchema.pre("save", async function (next) {
     });
     if (existingUser) {
       throw new Error("Employee already included");
-      next();
     }
   } catch (error) {
     next(error);
   }
 });
 
-module.exports = mongoose.model("User", UserSchema);
+UserSchema.pre("findOneAndUpdate", async function (next) {
+  this._update.updatedAt = new Date();
+});
 
-//   try {
-//     const existingUser = await mongoose.models.User.findOne({
-//     employeeId: this.employeeId,
-//   })
-//   if (existingUser) {
-//     throw new Error("Employee already included");
-//   } catch (error) {
-//     next(error)
-//   }
-// });
+module.exports = mongoose.model("User", UserSchema);
