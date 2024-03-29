@@ -3,12 +3,11 @@ const sendResponse = require("../../utils/sendResponse");
 
 const updateUser = async (req, res) => {
   try {
-    const userId = req.params.userId;
-    console.log("ID", userId);
+    const employeeId = req.params.employeeId;
+    console.log("ID", employeeId);
     const {
       username,
       password,
-      employeeId,
       lastName,
       firstName,
       middleName,
@@ -18,7 +17,7 @@ const updateUser = async (req, res) => {
 
     const updatedUser = await User.findOneAndUpdate(
       {
-        _id: userId,
+        employeeId,
       },
       {
         $set: {
@@ -36,7 +35,7 @@ const updateUser = async (req, res) => {
       { new: true }
     );
 
-    if (!updateUser) {
+    if (!updatedUser) {
       sendResponse.failed(res, "User does not exist", null, 404);
       return;
     }

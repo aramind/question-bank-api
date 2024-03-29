@@ -5,6 +5,6 @@ const router = express.Router();
 console.log("User Router");
 router.get("", userController.getUser);
 router.post("", userController.addUser);
-router.patch("/:userId", userController.updateUser);
+router.patch("/:employeeId", userController.updateUser);
 
 module.exports = router;
