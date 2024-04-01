@@ -6,5 +6,6 @@ console.log("User Router");
 router.get("", userController.getUser);
 router.post("", userController.addUser);
 router.patch("/:employeeId", userController.updateUser);
+router.delete("/:employeeId", userController.deleteUser);
 
 module.exports = router;
