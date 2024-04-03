@@ -35,7 +35,7 @@ const addUser = async (req, res) => {
       role,
       status,
     });
-    const createdUser = newUser.save();
+    const createdUser = await newUser.save();
     sendResponse.success(res, "User added successfully", createdUser, 201);
     return createdUser;
   } catch (error) {

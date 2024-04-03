@@ -11,6 +11,7 @@ const CourseSchema = new Schema({
   code: { type: String, required: true },
   database: { type: String, required: true },
   description: { type: String, required: true },
+  title: { type: String, required: true },
   subjects: { type: [SubjectSchema] },
   remarks: { type: String },
   creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
