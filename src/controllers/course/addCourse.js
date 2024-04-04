@@ -17,6 +17,7 @@ const addCourse = async (req, res) => {
     sendResponse.success(res, "Course added successfully", createdCourse, 201);
     return createdCourse;
   } catch (error) {
+    console.log(error);
     sendResponse.failed(res, "Error adding course", error, 500);
   }
 };
