@@ -5,5 +5,6 @@ const router = express.Router();
 console.log("Course Router");
 
 router.post("", courseController.addCourse);
+router.get("/trimmed", courseController.getCourseByFields);
 
 module.exports = router;
