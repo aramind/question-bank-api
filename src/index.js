@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
+const questionRouter = require("./routes/questionRouter");
 // env
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // routers
 app.use("/users", userRouter);
 app.use("/courses", courseRouter);
+app.use("/questions", questionRouter);
 
 // if not found
 app.use((req, res) =>
