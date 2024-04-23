@@ -6,5 +6,6 @@ const router = express.Router();
 console.log("Question Router");
 
 router.post("", questionController.addQuestion);
+router.get("", questionController.getQuestions);
 
 module.exports = router;
