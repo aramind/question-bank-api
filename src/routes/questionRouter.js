@@ -7,5 +7,6 @@ console.log("Question Router");
 
 router.post("", questionController.addQuestion);
 router.get("", questionController.getQuestions);
+router.patch("/:questionId", questionController.patchQuestion);
 
 module.exports = router;
