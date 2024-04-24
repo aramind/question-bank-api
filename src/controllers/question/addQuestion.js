@@ -5,6 +5,7 @@ const addQuestion = async (req, res) => {
     const { code } = req.body;
     const questionData = req.body;
 
+    console.log(questionData);
     const existingQuestion = await Question.findOne({ code });
 
     if (existingQuestion) {

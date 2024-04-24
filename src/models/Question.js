@@ -22,6 +22,7 @@ const QuestionSchema = new Schema({
   difficulty: { type: Number, required: true },
   question: { type: String, required: true },
   choices: { type: [ChoiceSchema] },
+  information: { type: String },
   tags: { type: [String], required: true },
   remarks: { type: String },
   creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
