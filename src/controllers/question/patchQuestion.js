@@ -6,23 +6,20 @@ const patchQuestion = async (req, res) => {
     const { questionId } = req.params;
     const patchData = req.body;
 
-    console.log(questionId);
-    console.log(patchData);
-
     const updatedQuestion = await Question.findByIdAndUpdate(
       questionId,
       { $set: patchData },
       { new: true }
     );
 
-    console.log(updatedQuestion);
+    // res.json(updatedQuestion);
     if (!updatedQuestion) {
       sendResponse.failed(res, "Question not found", null, 404);
     }
 
     sendResponse.success(
       res,
-      "Success updating question",
+      "Question updated successfully",
       updatedQuestion,
       200
     );
