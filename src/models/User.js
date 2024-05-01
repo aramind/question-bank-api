@@ -9,6 +9,7 @@ const NameSchema = new Schema({
 const UserSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
+  email: { type: String, required: true, trim: true, lowercase: true },
   employeeId: { type: String, required: true },
   name: {
     lastName: { type: String, required: true },
