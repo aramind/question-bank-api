@@ -5,6 +5,7 @@ const addUser = async (req, res) => {
   try {
     console.log(req.body);
     const {
+      email,
       username,
       password,
       employeeId,
@@ -26,6 +27,7 @@ const addUser = async (req, res) => {
     const newUser = new User({
       username,
       password,
+      email,
       employeeId,
       name: {
         lastName,

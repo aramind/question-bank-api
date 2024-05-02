@@ -6,6 +6,7 @@ const updateUser = async (req, res) => {
     const employeeId = req.params.employeeId;
     console.log("ID", employeeId);
     const {
+      email,
       username,
       password,
       lastName,
@@ -21,6 +22,7 @@ const updateUser = async (req, res) => {
       },
       {
         $set: {
+          email,
           username,
           password,
           employeeId,
