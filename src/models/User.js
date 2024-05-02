@@ -1,23 +1,49 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const validRoles = JSON.parse(process.env.VALID_ROLES || "[]");
+const validStatuses = JSON.parse(process.env.VALID_STATUSES || "[]");
+
 const NameSchema = new Schema({
-  lastName: { type: String, required: true },
-  firstName: { type: String, required: true },
+  lastName: { type: String, required: [true, "Last Name is required"] },
+  firstName: { type: String, required: [true, "First Name is required"] },
   middleName: { type: String },
 });
 const UserSchema = new Schema({
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-  email: { type: String, required: true, trim: true, lowercase: true },
-  employeeId: { type: String, required: true },
+  username: {
+    type: String,
+    required: [true, "Username is required"],
+    unique: [true, "Username already taken"],
+  },
+  password: { type: String, required: [true, "Password is required"] },
+  email: {
+    type: String,
+    required: [true, "Email is required"],
+    trim: true,
+    lowercase: true,
+    unique: [true, "Email must be unique"],
+  },
+  employeeId: {
+    type: String,
+    required: [true, "Employee ID is required"],
+    trim: true,
+    unique: [true, "Employee ID must be unique"],
+  },
   name: {
-    lastName: { type: String, required: true },
-    firstName: { type: String, required: true },
+    lastName: { type: String, required: [true, "Last Name is required"] },
+    firstName: { type: String, required: [true, "First Name is required"] },
     middleName: { type: String },
   },
-  role: { type: String, required: true },
-  status: { type: String, required: true },
+  role: {
+    type: String,
+    required: [true, "Role cannot be empty"],
+    enum: { values: validRoles, message: "Invalid role" },
+  },
+  status: {
+    type: String,
+    required: [true, "Status cannot be empty"],
+    enum: { values: validStatuses, message: "Invalid role" },
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -26,19 +52,6 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-});
-
-UserSchema.pre("save", async function (next) {
-  try {
-    const existingUser = await mongoose.models.User.findOne({
-      employeeId: this.employeeId,
-    });
-    if (existingUser) {
-      throw new Error("Employee already included");
-    }
-  } catch (error) {
-    next(error);
-  }
 });
 
 UserSchema.pre("findOneAndUpdate", async function (next) {
