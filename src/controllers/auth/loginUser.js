@@ -5,6 +5,7 @@ const comparePassword = require("../../utils/comparePassword");
 const User = require("../../models/User");
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
+const getRoles = require("../../utils/getRoles");
 require("dotenv").config();
 
 const loginUser = async (req, res) => {
@@ -47,14 +48,21 @@ const loginUser = async (req, res) => {
         "employeeId",
       ]);
 
+      const userInfo = {
+        ...limitedUserInfo,
+        role: getRoles.list[limitedUserInfo.role],
+      };
+
+      console.log("USERINFO", userInfo);
+
       const accessToken = jwt.sign(
-        limitedUserInfo,
+        { UserInfo: userInfo },
         process.env.AUTH_ACCESS_TOKEN_SECRET,
         { expiresIn: process.env.AUTH_ACCESS_TOKEN_EXPIRY }
       );
 
       const refreshToken = jwt.sign(
-        limitedUserInfo,
+        { UserInfo: userInfo },
         process.env.AUTH_REFRESH_TOKEN_SECRET,
         { expiresIn: process.env.AUTH_REFRESH_TOKEN_EXPIRY }
       );
