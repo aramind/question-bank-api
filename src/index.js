@@ -8,9 +8,9 @@ const courseRouter = require("./routes/courseRouter");
 const questionRouter = require("./routes/questionRouter");
 const authRouter = require("./routes/authRouter");
 const generalRouter = require("./routes/generalRouter");
-
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+const verifyJWT = require("./middlewares/auth/verifyJWT");
 
 // env
 dotenv.config();
@@ -29,10 +29,12 @@ app.use(morgan("combined"));
 // routers
 
 app.use("/auth", authRouter);
+app.use("", generalRouter);
+app.use(verifyJWT);
 app.use("/users", userRouter);
 app.use("/courses", courseRouter);
 app.use("/questions", questionRouter);
-app.use("", generalRouter);
+
 // if not found
 app.use((req, res) =>
   res.status(404).json({ success: false, message: "Not found" })
