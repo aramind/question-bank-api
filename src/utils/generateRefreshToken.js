@@ -1,6 +1,7 @@
 require("dotenv").config();
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
+const getRoles = require("./getRoles");
 
 const generateRefreshToken = (foundUser) => {
   const limitedUserInfo = _.pick(foundUser, [

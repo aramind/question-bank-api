@@ -9,7 +9,7 @@ const handleRefreshToken = async (req, res) => {
   try {
     const cookies = req.cookies;
 
-    console.log("COOKIES", cookies);
+    // console.log("COOKIES", cookies);
     if (!cookies?.jwt) {
       return sendResponse.failed(res, "Unauthorized", null, 401);
     }
@@ -28,10 +28,11 @@ const handleRefreshToken = async (req, res) => {
       process.env.AUTH_REFRESH_TOKEN_SECRET,
       (err, decoded) => {
         if (err) {
-          console.log("ERROR", err);
+          // console.log("ERROR", err);
           throw err;
         } else {
-          if (foundUser.username !== decoded.username) {
+          // console.log(decoded);
+          if (foundUser.username !== decoded.UserInfo.username) {
             return sendResponse.failed(res, "Unauthorized", null, 401);
           }
 
