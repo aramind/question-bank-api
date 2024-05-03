@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const dotenv = require("dotenv");
+dotenv.config();
 
 const validRoles = JSON.parse(process.env.VALID_ROLES || "[]");
 const validStatuses = JSON.parse(process.env.VALID_STATUSES || "[]");
 
-const NameSchema = new Schema({
-  lastName: { type: String, required: [true, "Last Name is required"] },
-  firstName: { type: String, required: [true, "First Name is required"] },
-  middleName: { type: String },
-});
+console.log(validRoles);
+console.log(validStatuses);
+
 const UserSchema = new Schema({
   username: {
     type: String,

@@ -1,12 +1,15 @@
+const { body } = require("express-validator");
 const User = require("../models/User");
 
-const validRoles = ["admin", "editor", "viewer"];
-const validStatuses = ["active", "deactivated"];
+const validRoles = JSON.parse(process.env.VALID_ROLES || "[]");
+const validStatuses = JSON.parse(process.env.VALID_STATUSES || "[]");
+
 const authValidator = {
   loginValidator: [
     body("username").trim().notEmpty().withMessage("Username cannot be empty"),
     body("password").notEmpty().withMessage("Password cannot be empty"),
   ],
+
   registerUserValidator: [
     body("employeeId")
       .trim()
@@ -56,6 +59,7 @@ const authValidator = {
       .trim()
       .notEmpty()
       .withMessage("First Name cannot be empty"),
+    body("middleName").trim(),
     body("role")
       .trim()
       .notEmpty()

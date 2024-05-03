@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
 const questionRouter = require("./routes/questionRouter");
+const authRouter = require("./routes/authRouter");
 // env
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routers
+app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/courses", courseRouter);
 app.use("/questions", questionRouter);
