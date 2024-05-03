@@ -7,7 +7,8 @@ const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
 const questionRouter = require("./routes/questionRouter");
 const authRouter = require("./routes/authRouter");
-const verifyJWT = require("./middlewares/auth/verifyAccessToken");
+const generalRouter = require("./routes/generalRouter");
+
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 
@@ -26,13 +27,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("combined"));
 // routers
-app.use("/auth", authRouter);
 
-// app.use(verifyJWT);
+app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/courses", courseRouter);
 app.use("/questions", questionRouter);
-
+app.use("", generalRouter);
 // if not found
 app.use((req, res) =>
   res.status(404).json({ success: false, message: "Not found" })

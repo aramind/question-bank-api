@@ -1,6 +1,7 @@
-const logoutUser = require("../generalControllers.js/logoutUser");
+const logoutUser = require("./logoutUser");
 
-const generalControllers = {
+console.log("in gen controller");
+const generalController = {
   logoutUser,
 };
-module.exports = generalControllers;
+module.exports = generalController;

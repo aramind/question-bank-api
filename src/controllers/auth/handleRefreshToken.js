@@ -8,6 +8,7 @@ const handleRefreshToken = async (req, res) => {
   try {
     const cookies = req.cookies;
 
+    console.log("COOKIES", cookies);
     if (!cookies?.jwt) {
       return sendResponse.failed(res, "Unauthorized", null, 401);
     }

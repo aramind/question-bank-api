@@ -6,13 +6,16 @@ const sendSuccessfulLoggingOut = (res) => {
 };
 
 const clearCookie = (res, token) => {
-  res.clearCookie("jwt", refreshToken, {
+  res.clearCookie("jwt", token, {
     httpOnly: true,
+    // sameSite: "None",
+    // secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
 };
 
 const logoutUser = async (req, res) => {
+  console.log("in logout controller");
   try {
     const cookies = req.cookies;
 
