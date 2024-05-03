@@ -16,8 +16,9 @@ const verifyJWT = (req, res, next) => {
         }
         return sendResponse.error(res, err, "Unauthorize access", 403);
       }
-      req.user = decoded;
+      req.userInfo = decoded.UserInfo;
       // console.log("DECODED", decoded);
+      console.log(req.userInfo);
       next();
     });
   }
