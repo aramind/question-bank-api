@@ -44,8 +44,8 @@ const UserSchema = new Schema({
     required: [true, "Status cannot be empty"],
     enum: { values: validStatuses, message: "Invalid role" },
   },
-  refreshToken: {
-    type: String,
+  tokens: {
+    refresh: { type: String },
   },
   createdAt: {
     type: Date,

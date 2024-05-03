@@ -4,6 +4,8 @@ const getAllErrorMessages = require("../../utils/getAllErrorMessages");
 const comparePassword = require("../../utils/comparePassword");
 const User = require("../../models/User");
 const _ = require("lodash");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const loginUser = async (req, res) => {
   console.log("in login controller");
@@ -44,7 +46,26 @@ const loginUser = async (req, res) => {
         "status",
         "employeeId",
       ]);
-      sendResponse.success(res, "Login Successful", limitedUserInfo, 200);
+
+      const accessToken = jwt.sign(
+        limitedUserInfo,
+        process.env.AUTH_ACCESS_TOKEN_SECRET,
+        { expiresIn: process.env.AUTH_ACCESS_TOKEN_EXPIRY }
+      );
+
+      const refreshToken = jwt.sign(
+        limitedUserInfo,
+        process.env.AUTH_REFRESH_TOKEN_SECRET,
+        { expiresIn: process.env.AUTH_REFRESH_TOKEN_EXPIRY }
+      );
+
+      foundUser.tokens.refresh = refreshToken;
+      const updatedUser = await foundUser.save();
+      res.cookie("jwt", refreshToken, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+      sendResponse.success(res, "Login Successful", accessToken, 200);
     }
   } catch (error) {
     console.error("Error logging in", error);
