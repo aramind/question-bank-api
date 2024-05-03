@@ -3,6 +3,7 @@ const sendResponse = require("../../utils/sendResponse");
 require("dotenv").config();
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
+const generateAccessToken = require("../../utils/generateAccessToken");
 
 const handleRefreshToken = async (req, res) => {
   try {
@@ -34,28 +35,12 @@ const handleRefreshToken = async (req, res) => {
             return sendResponse.failed(res, "Unauthorized", null, 401);
           }
 
-          const limitedUserInfo = _.pick(foundUser, [
-            "_id",
-            "name",
-            "email",
-            "username",
-            "role",
-            "status",
-            "employeeId",
-          ]);
-
-          const userInfo = {
-            ...limitedUserInfo,
-            role: getRoles.list[limitedUserInfo.role],
-          };
-
-          const accessToken = jwt.sign(
-            { UserInfo: userInfo },
-            process.env.AUTH_ACCESS_TOKEN_SECRET,
-            { expiresIn: process.env.AUTH_ACCESS_TOKEN_EXPIRY }
+          return sendResponse.success(
+            res,
+            "Refreshed",
+            generateAccessToken(foundUser),
+            200
           );
-
-          return sendResponse.success(res, "Refreshed", accessToken, 200);
         }
       }
     );
