@@ -3,9 +3,9 @@ const sendResponse = require("../../utils/sendResponse");
 require("dotenv").config();
 
 const verifyJWT = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
+  const authHeader = req.headers.authorization || req.headers.Authorization;
   // console.log(authHeader);
-  if (!authHeader) {
+  if (!authHeader?.startsWith("Bearer")) {
     return sendResponse.failed(res, "Unknown Authorization", null, 401);
   } else {
     const token = authHeader.split(" ")[1];
@@ -18,7 +18,7 @@ const verifyJWT = (req, res, next) => {
       }
       req.userInfo = decoded.UserInfo;
       // console.log("DECODED", decoded);
-      console.log(req.userInfo);
+      // console.log("USERINFO IN verifyJWT:", req.userInfo);
       next();
     });
   }
