@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const dotenv = require("dotenv");
+const getRoles = require("../utils/getRoles");
+const getStatuses = require("../utils/getStatuses");
 dotenv.config();
 
-const validRoles = JSON.parse(process.env.VALID_ROLES || "[]");
-const validStatuses = JSON.parse(process.env.VALID_STATUSES || "[]");
-
-console.log(validRoles);
-console.log(validStatuses);
+const validRoles = getRoles.keys;
+const validStatuses = getStatuses.keys;
 
 const UserSchema = new Schema({
   username: {
