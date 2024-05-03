@@ -29,38 +29,39 @@ const registerUser = async (req, res) => {
         status,
       } = matchedData(req);
 
-      if (await User.findOne({ employeeId })) {
-        sendResponse.failed(
+      const existingUser = await User.findOne({
+        $or: [{ employeeId }, { username }, { email }],
+      });
+
+      if (existingUser) {
+        let errorMessage = "";
+        if (existingUser.employeeId === employeeId) {
+          errorMessage = "Employee ID";
+        } else if (existingUser.username === username) {
+          errorMessage = "Username";
+        } else if (existingUser.email === email) {
+          errorMessage = "Email";
+        }
+        return sendResponse.failed(
           res,
-          "Employee ID cannot have duplicate",
-          employeeId,
+          `${errorMessage} already in use`,
+          null,
           409
         );
-      } else if (await User.findOne({ username })) {
-        sendResponse.failed(res, "Username already taken", username, 409);
-      } else if (await User.findOne({ email })) {
-        sendResponse.failed(res, "Email already in use", email, 409);
-      } else {
-        console.log(middleName);
-        const newUser = new User({
-          email,
-          username,
-          employeeId,
-          role,
-          status,
-          name: { lastName, firstName, middleName },
-          password: await hashPassword(password),
-        });
-
-        const createdUser = await newUser.save();
-        sendResponse.success(
-          res,
-          "User created successfully",
-          createdUser,
-          201
-        );
-        console.log(createdUser);
       }
+
+      const newUser = new User({
+        email,
+        username,
+        employeeId,
+        role,
+        status,
+        name: { lastName, firstName, middleName },
+        password: await hashPassword(password),
+      });
+
+      const createdUser = await newUser.save();
+      sendResponse.success(res, "User created successfully", createdUser, 201);
     }
   } catch (error) {
     console.error("Error adding user:", error);

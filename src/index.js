@@ -26,10 +26,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("combined"));
-// routers
 
+// routers
 app.use("/auth", authRouter);
 app.use("", generalRouter);
+// routes needing auth
 app.use(verifyJWT);
 app.use("/users", userRouter);
 app.use("/courses", courseRouter);
