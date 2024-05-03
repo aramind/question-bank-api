@@ -12,4 +12,5 @@ router.post(
   authValidator.registerUserValidator,
   authControllers.registerUser
 );
+router.get("/refresh", authControllers.handleRefreshToken);
 module.exports = router;

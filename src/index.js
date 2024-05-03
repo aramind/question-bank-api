@@ -7,6 +7,10 @@ const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
 const questionRouter = require("./routes/questionRouter");
 const authRouter = require("./routes/authRouter");
+const verifyJWT = require("./middlewares/auth/verifyAccessToken");
+const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
+
 // env
 dotenv.config();
 
@@ -19,9 +23,12 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cookieParser());
+app.use(morgan("combined"));
 // routers
 app.use("/auth", authRouter);
+
+// app.use(verifyJWT);
 app.use("/users", userRouter);
 app.use("/courses", courseRouter);
 app.use("/questions", questionRouter);
