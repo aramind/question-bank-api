@@ -6,6 +6,8 @@ const User = require("../../models/User");
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const getRoles = require("../../utils/getRoles");
+const generateAccessToken = require("../../utils/generateAccessToken");
+const generateRefreshToken = require("../../utils/generateRefreshToken");
 require("dotenv").config();
 
 const loginUser = async (req, res) => {
@@ -38,34 +40,8 @@ const loginUser = async (req, res) => {
       return;
     } else {
       // create and attach jwt tokens
-      const limitedUserInfo = _.pick(foundUser, [
-        "_id",
-        "name",
-        "email",
-        "username",
-        "role",
-        "status",
-        "employeeId",
-      ]);
-
-      const userInfo = {
-        ...limitedUserInfo,
-        role: getRoles.list[limitedUserInfo.role],
-      };
-
-      console.log("USERINFO", userInfo);
-
-      const accessToken = jwt.sign(
-        { UserInfo: userInfo },
-        process.env.AUTH_ACCESS_TOKEN_SECRET,
-        { expiresIn: process.env.AUTH_ACCESS_TOKEN_EXPIRY }
-      );
-
-      const refreshToken = jwt.sign(
-        { UserInfo: userInfo },
-        process.env.AUTH_REFRESH_TOKEN_SECRET,
-        { expiresIn: process.env.AUTH_REFRESH_TOKEN_EXPIRY }
-      );
+      const accessToken = generateAccessToken(foundUser);
+      const refreshToken = generateRefreshToken(foundUser);
 
       foundUser.tokens.refresh = refreshToken;
       const updatedUser = await foundUser.save();

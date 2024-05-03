@@ -44,8 +44,13 @@ const handleRefreshToken = async (req, res) => {
             "employeeId",
           ]);
 
+          const userInfo = {
+            ...limitedUserInfo,
+            role: getRoles.list[limitedUserInfo.role],
+          };
+
           const accessToken = jwt.sign(
-            limitedUserInfo,
+            { UserInfo: userInfo },
             process.env.AUTH_ACCESS_TOKEN_SECRET,
             { expiresIn: process.env.AUTH_ACCESS_TOKEN_EXPIRY }
           );
