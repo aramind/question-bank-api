@@ -4,6 +4,7 @@ require("dotenv").config();
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const generateAccessToken = require("../../utils/generateAccessToken");
+const getRoles = require("../../utils/getRoles");
 
 const handleRefreshToken = async (req, res) => {
   try {
@@ -51,6 +52,7 @@ const handleRefreshToken = async (req, res) => {
             {
               ...returnedUserInfo,
               token: generateAccessToken(foundUser),
+              role: getRoles.list[returnedUserInfo.role],
             },
             200
           );

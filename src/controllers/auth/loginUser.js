@@ -43,9 +43,9 @@ const loginUser = async (req, res) => {
       foundUser.tokens.refresh = refreshToken;
       const updatedUser = await foundUser.save();
       res.cookie("jwt", refreshToken, {
-        // httpOnly: true,
-        // sameSite: "None",
-        // secure: true,
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
         maxAge: 24 * 60 * 60 * 1000,
         // maxAge: 15 * 1000,
         // maxAge: 10 * 1000,
@@ -67,6 +67,7 @@ const loginUser = async (req, res) => {
         {
           ...returnedUserInfo,
           token: accessToken,
+          role: getRoles.list[returnedUserInfo.role],
         },
         200
       );

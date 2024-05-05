@@ -2,7 +2,7 @@ const User = require("../../models/User");
 const sendResponse = require("../../utils/sendResponse");
 
 const sendSuccessfulLoggingOut = (res) => {
-  sendResponse.success(res, "User logged out successfully", 204);
+  sendResponse.success(res, "User logged out successfully", {}, 204);
 };
 
 const clearCookie = (res, token) => {
