@@ -47,6 +47,8 @@ const loginUser = async (req, res) => {
         // sameSite: "None",
         // secure: true,
         maxAge: 24 * 60 * 60 * 1000,
+        // maxAge: 15 * 1000,
+        // maxAge: 10 * 1000,
       });
 
       const returnedUserInfo = _.pick(foundUser, [
