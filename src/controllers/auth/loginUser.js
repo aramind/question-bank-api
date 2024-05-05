@@ -11,7 +11,7 @@ const generateRefreshToken = require("../../utils/generateRefreshToken");
 require("dotenv").config();
 
 const loginUser = async (req, res) => {
-  console.log("in login controller");
+  // console.log("in login controller");
   try {
     const result = validationResult(req);
     console.log(result.array());
@@ -24,7 +24,7 @@ const loginUser = async (req, res) => {
       );
     }
 
-    console.log(matchedData(req));
+    // console.log(matchedData(req));
     const { username, password } = matchedData(req);
 
     const foundUser = await User.findOne({ username });
@@ -43,7 +43,7 @@ const loginUser = async (req, res) => {
       foundUser.tokens.refresh = refreshToken;
       const updatedUser = await foundUser.save();
       res.cookie("jwt", refreshToken, {
-        httpOnly: true,
+        // httpOnly: true,
         // sameSite: "None",
         // secure: true,
         maxAge: 24 * 60 * 60 * 1000,
@@ -58,6 +58,7 @@ const loginUser = async (req, res) => {
         "employeeId",
       ]);
 
+      // console.log("RES COKIE:", res.getHeaders());
       sendResponse.success(
         res,
         "Login Successful",

@@ -8,8 +8,8 @@ const sendSuccessfulLoggingOut = (res) => {
 const clearCookie = (res, token) => {
   res.clearCookie("jwt", token, {
     httpOnly: true,
-    // sameSite: "None",
-    // secure: true,
+    sameSite: "None",
+    secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
 };

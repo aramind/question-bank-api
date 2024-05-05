@@ -6,6 +6,7 @@ const verifyJWT = require("../middlewares/auth/verifyJWT");
 console.log("Entering auth router");
 const router = express.Router();
 
+router.get("/refresh", authControllers.handleRefreshToken);
 router.post("/login", authValidator.loginValidator, authControllers.loginUser);
 router.post(
   "/register",
@@ -14,5 +15,5 @@ router.post(
   authValidator.registerUserValidator,
   authControllers.registerUser
 );
-router.get("/refresh", authControllers.handleRefreshToken);
+
 module.exports = router;

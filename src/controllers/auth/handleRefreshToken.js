@@ -7,15 +7,33 @@ const generateAccessToken = require("../../utils/generateAccessToken");
 
 const handleRefreshToken = async (req, res) => {
   try {
+    // console.log("REQ", req);
+    // console.log("COOKIES", req.cookies);
+
     const refreshToken = req.cookies?.jwt;
+    // console.log("REFRESHTOKEN", refreshToken);
     if (!refreshToken) {
-      return sendResponse.failed(res, "Unauthorized", null, 401);
+      return sendResponse.failed(
+        res,
+        "Unauthorized dahil walang cookie",
+        null,
+        401
+      );
     }
     const foundUser = await User.findOne({ "tokens.refresh": refreshToken });
 
     if (!foundUser) {
       return sendResponse.failed(res, "User not found", null, 404);
     }
+    const returnedUserInfo = _.pick(foundUser, [
+      "_id",
+      "name",
+      "username",
+      "role",
+      "status",
+      "employeeId",
+    ]);
+
     //   if there is user, verify the jwt
     jwt.verify(
       refreshToken,
@@ -27,16 +45,20 @@ const handleRefreshToken = async (req, res) => {
           if (foundUser.username !== decoded.UserInfo.username) {
             return sendResponse.failed(res, "Unauthorized", null, 401);
           }
-          return sendResponse.success(
+          sendResponse.success(
             res,
-            "Refreshed",
-            generateAccessToken(foundUser),
+            "Refreshed successful",
+            {
+              ...returnedUserInfo,
+              token: generateAccessToken(foundUser),
+            },
             200
           );
         }
       }
     );
   } catch (error) {
+    console.log(error);
     sendResponse.error(res, error, "Request error", 500);
   }
 };

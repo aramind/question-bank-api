@@ -11,6 +11,8 @@ const generalRouter = require("./routes/generalRouter");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const verifyJWT = require("./middlewares/auth/verifyJWT");
+const credentials = require("./middlewares/auth/credentials");
+const corsOptions = require("./config/corsOptions");
 
 // env
 dotenv.config();
@@ -20,11 +22,15 @@ const PORT = process.env.PORT || 5000;
 const DB = process.env.MONGO_CONNECT;
 
 const app = express();
-app.use(cors());
+
+// // CORS options
+app.use(cookieParser());
+app.use(credentials);
+app.use(cors(corsOptions));
+// app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(morgan("combined"));
 
 // routers
