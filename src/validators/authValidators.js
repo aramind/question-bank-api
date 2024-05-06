@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 const User = require("../models/User");
 
 const validRoles = JSON.parse(process.env.VALID_ROLES || "[]");
@@ -21,6 +21,7 @@ const authValidator = {
         if (employeeIdExists) {
           throw new Error("EmployeeId cannot have duplicate");
         }
+        return true;
       }),
     body("username")
       .trim()
@@ -32,6 +33,7 @@ const authValidator = {
         if (usernameExists) {
           throw new Error("Username already taken");
         }
+        return true;
       }),
     body("password")
       .notEmpty()

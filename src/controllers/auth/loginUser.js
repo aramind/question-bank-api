@@ -24,7 +24,7 @@ const loginUser = async (req, res) => {
       );
     }
 
-    // console.log(matchedData(req));
+    console.log(matchedData(req));
     const { username, password } = matchedData(req);
 
     const foundUser = await User.findOne({ username });

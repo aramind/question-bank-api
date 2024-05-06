@@ -1,71 +1,81 @@
-const { validationResult, matchedData } = require("express-validator");
-const sendResponse = require("../../utils/sendResponse");
+// const { validationResult, matchedData } = require("express-validator");
 const User = require("../../models/User");
 const hashPassword = require("../../utils/hashPassword");
-const getAllErrorMessages = require("../../utils/getAllErrorMessages");
+const sendResponse = require("../../utils/sendResponse");
 
 const registerUser = async (req, res) => {
   console.log("in register user controller");
+  console.log("REG REQ", req?.body);
   try {
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
-      sendResponse.error(
-        res,
-        result.array(),
-        getAllErrorMessages(result.array()),
-        400
-      );
-      console.log(matchedData(req));
-    } else {
-      const {
-        email,
-        username,
-        password,
-        employeeId,
-        lastName,
-        firstName,
-        middleName,
-        role,
-        status,
-      } = matchedData(req);
+    // const validationError = validationResult(req);
+    // if (!validationError.isEmpty()) {
+    //   return sendResponse.error(
+    //     res,
+    //     validationError.array(),
+    //     getAllErrorMessages(validationError.array()),
+    //     400
+    //   );
+    // }
 
-      const existingUser = await User.findOne({
-        $or: [{ employeeId }, { username }, { email }],
-      });
+    // console.log(matchedData(req));
 
-      if (existingUser) {
-        let errorMessage = "";
-        if (existingUser.employeeId === employeeId) {
-          errorMessage = "Employee ID";
-        } else if (existingUser.username === username) {
-          errorMessage = "Username";
-        } else if (existingUser.email === email) {
-          errorMessage = "Email";
-        }
-        return sendResponse.failed(
-          res,
-          `${errorMessage} already in use`,
-          null,
-          409
-        );
+    const userData = req?.body;
+
+    console.log("USERDATA", userData);
+    const {
+      email,
+      username,
+      password,
+      employeeId,
+      lastName,
+      firstName,
+      middleName,
+      role,
+      status,
+    } = userData;
+
+    const existingUser = await User.findOne({
+      $or: [{ employeeId }, { username }, { email }],
+    });
+
+    if (existingUser) {
+      let errorMessage = "";
+      if (existingUser.employeeId === employeeId) {
+        errorMessage = "Employee ID";
+      } else if (existingUser.username === username) {
+        errorMessage = "Username";
+      } else if (existingUser.email === email) {
+        errorMessage = "Email";
       }
-
-      const newUser = new User({
-        email,
-        username,
-        employeeId,
-        role,
-        status,
-        name: { lastName, firstName, middleName },
-        password: await hashPassword(password),
-      });
-
-      const createdUser = await newUser.save();
-      sendResponse.success(res, "User created successfully", createdUser, 201);
+      return sendResponse.failed(
+        res,
+        `${errorMessage} already in use`,
+        null,
+        409
+      );
     }
+
+    const newUser = new User({
+      email,
+      username,
+      employeeId,
+      role,
+      status,
+      name: { lastName, firstName, middleName },
+      password: await hashPassword(password),
+    });
+
+    const createdUser = await newUser.save();
+    return sendResponse.success(
+      res,
+      "User created successfully",
+      createdUser,
+      201
+    );
   } catch (error) {
     console.error("Error adding user:", error);
-    sendResponse.error(res, error, "Error adding user", 500);
+    return sendResponse.error(res, error, "Error adding user", 500);
   }
 };
+
 module.exports = registerUser;
