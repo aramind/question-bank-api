@@ -1,6 +1,7 @@
 const sendResponse = require("../../utils/sendResponse");
 const Question = require("../../models/Question");
 const addQuestion = async (req, res) => {
+  console.log("in add question controller");
   try {
     const { code } = req.body;
     const questionData = req.body;

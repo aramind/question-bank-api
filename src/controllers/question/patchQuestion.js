@@ -4,11 +4,14 @@ const sendResponse = require("../../utils/sendResponse");
 const patchQuestion = async (req, res) => {
   try {
     const { questionId } = req.params;
-    const patchData = req.body;
+    const { editor, ...patchData } = req.body;
 
     const updatedQuestion = await Question.findByIdAndUpdate(
       questionId,
-      { $set: patchData },
+      {
+        $set: patchData,
+        $push: { editors: { editor: editor, editDate: new Date() } },
+      },
       { new: true }
     );
 

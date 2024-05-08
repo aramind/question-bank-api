@@ -3,8 +3,12 @@ const sendResponse = require("../../utils/sendResponse");
 
 const getQuestions = async (req, res) => {
   try {
+    const dynamicRouteParams = { ...req.params };
+    const dynamicQueryParams = { ...req.query };
+
+    const params = { ...dynamicRouteParams, ...dynamicQueryParams };
     console.log("Get Questions Controller");
-    const questions = await Question.find(req.query);
+    const questions = await Question.find(params);
 
     if (questions) {
       sendResponse.success(res, "Success retrieving questions", questions, 200);

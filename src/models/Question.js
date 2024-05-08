@@ -5,6 +5,11 @@ const ChoiceSchema = new Schema({
   value: { type: String, required: true },
   isCorrect: { type: Boolean, required: true },
 });
+
+const EditorSchema = new Schema({
+  editor: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  editDate: { type: Date, required: true, default: Date.now },
+});
 const QuestionSchema = new Schema({
   code: { type: String, required: true },
   database: { type: String, required: true },
@@ -26,6 +31,7 @@ const QuestionSchema = new Schema({
   tags: { type: [String], required: true },
   remarks: { type: String },
   creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  editors: { type: [EditorSchema] },
   status: {
     type: String,
     enum: ["pending", "approved", "deleted"],
