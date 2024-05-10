@@ -9,11 +9,12 @@ const registerUserSchema = require("../middlewares/validations/registerUserSchem
 console.log("Entering auth router");
 const router = express.Router();
 
+// /v1/auth
+
 router.get("/refresh", authControllers.handleRefreshToken);
 router.post("/login", authValidator.loginValidator, authControllers.loginUser);
 router.post(
   "/register",
-
   verifyJWT,
   verifyRoles(["super"]),
   // authValidator?.registerUserValidator,

@@ -6,12 +6,11 @@ const getRoles = require("./getRoles");
 const generateAccessToken = (foundUser) => {
   const limitedUserInfo = _.pick(foundUser, [
     "_id",
-    "name",
-    "email",
     "username",
+    "employeeId",
+    "name",
     "role",
     "status",
-    "employeeId",
   ]);
 
   const userInfo = {

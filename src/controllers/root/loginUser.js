@@ -1,38 +1,34 @@
 const { validationResult, matchedData } = require("express-validator");
-const sendResponse = require("../../utils/sendResponse");
-const getAllErrorMessages = require("../../utils/getAllErrorMessages");
-const comparePassword = require("../../utils/comparePassword");
-const User = require("../../models/User");
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
-const getRoles = require("../../utils/getRoles");
-const generateAccessToken = require("../../utils/generateAccessToken");
-const generateRefreshToken = require("../../utils/generateRefreshToken");
 require("dotenv").config();
 
 const loginUser = async (req, res) => {
-  // console.log("in login controller");
+  console.log("in login controller");
   try {
-    const result = validationResult(req);
-    console.log(result.array());
-    if (!result.isEmpty()) {
-      return sendResponse.error(
-        res,
-        result.array(),
-        getAllErrorMessages(result.array()),
-        400
-      );
-    }
+    // const result = validationResult(req);
 
-    console.log(matchedData(req));
-    const { username, password } = matchedData(req);
+    // console.log(result.array());
+    // if (!result.isEmpty()) {
+    //   return sendResponse.error(
+    //     res,
+    //     result.array(),
+    //     getAllErrorMessages(result.array()),
+    //     400
+    //   );
+    // }
+
+    // console.log(matchedData(req));
+    // const { username, password } = matchedData(req);
+    const { username, password } = req.body;
 
     const foundUser = await User.findOne({ username });
     if (!foundUser) {
       return sendResponse.failed(res, "Invalid credentials", null, 401);
     }
 
-    const match = await comparePassword(password, foundUser.password);
+    const match = await compareEncPassword(password, foundUser.password);
+    // const match = await comparePassword(password, foundUser.password);
     if (!match) {
       return sendResponse.failed(res, "Invalid credentials", null, 401);
     } else {

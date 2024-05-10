@@ -34,13 +34,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("combined"));
 
 // routers
-app.use("/auth", authRouter);
-app.use("", generalRouter);
+app.use("/v1/auth", authRouter);
+app.use("/v1", generalRouter);
+
 // routes needing auth
 app.use(verifyJWT);
-app.use("/users", userRouter);
-app.use("/courses", courseRouter);
-app.use("/questions", questionRouter);
+app.use("/v1/users", userRouter);
+app.use("/v1/courses", courseRouter);
+app.use("/v1/questions", questionRouter);
 
 // if not found
 app.use((req, res) =>
