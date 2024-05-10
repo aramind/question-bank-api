@@ -3,7 +3,10 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
+const employeeRouter = require("./routes/employeeRouter");
+const rootRouter = require("./routes/rootRouter");
 const userRouter = require("./routes/userRouter");
+
 const courseRouter = require("./routes/courseRouter");
 const questionRouter = require("./routes/questionRouter");
 const authRouter = require("./routes/authRouter");
@@ -33,12 +36,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("combined"));
 
+// new routes
+app.use("/v1/employees", employeeRouter);
+app.use("/v1", rootRouter);
 // routers
-app.use("/v1/auth", authRouter);
-app.use("/v1", generalRouter);
+app.use("/auth", authRouter);
+app.use("/general", generalRouter);
 
 // routes needing auth
-app.use(verifyJWT);
+// app.use(verifyJWT);
 app.use("/v1/users", userRouter);
 app.use("/v1/courses", courseRouter);
 app.use("/v1/questions", questionRouter);

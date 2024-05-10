@@ -1,7 +1,5 @@
 const cryptoJS = require("crypto-js");
-const dotenv = require("dotenv");
-dotenv.config();
-const KEY = JSON.parse(process.env.MAGIC_WORD);
+const { KEY } = require("../config/constants");
 
 const securePassword = {
   encrypt: (pw) => {

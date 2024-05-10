@@ -1,10 +1,16 @@
-const { validationResult, matchedData } = require("express-validator");
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
+const Employee = require("../../models/Employee");
+const compareEncPassword = require("../../utils/compareEncPassword");
+const sendResponse = require("../../utils/sendResponse");
+const generateAccessToken = require("../../utils/generateAccessToken");
+const generateRefreshToken = require("../../utils/generateRefreshToken");
+const getRoles = require("../../utils/getRoles");
 require("dotenv").config();
 
-const loginUser = async (req, res) => {
+const loginEmployee = async (req, res) => {
   console.log("in login controller");
+  console.log(req?.body);
   try {
     // const result = validationResult(req);
 
@@ -22,22 +28,22 @@ const loginUser = async (req, res) => {
     // const { username, password } = matchedData(req);
     const { username, password } = req.body;
 
-    const foundUser = await User.findOne({ username });
-    if (!foundUser) {
+    const foundEmp = await Employee.findOne({ username });
+    if (!foundEmp) {
       return sendResponse.failed(res, "Invalid credentials", null, 401);
     }
 
-    const match = await compareEncPassword(password, foundUser.password);
+    const match = await compareEncPassword(password, foundEmp.password);
     // const match = await comparePassword(password, foundUser.password);
     if (!match) {
       return sendResponse.failed(res, "Invalid credentials", null, 401);
     } else {
       // create and attach jwt tokens
-      const accessToken = generateAccessToken(foundUser);
-      const refreshToken = generateRefreshToken(foundUser);
+      const accessToken = generateAccessToken(foundEmp);
+      const refreshToken = generateRefreshToken(foundEmp);
 
-      foundUser.tokens.refresh = refreshToken;
-      const updatedUser = await foundUser.save();
+      foundEmp?.tokens?.push[{ refresh: refreshToken }];
+      const updateEmp = await foundEmp.save();
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
         sameSite: "None",
@@ -47,7 +53,7 @@ const loginUser = async (req, res) => {
         // maxAge: 10 * 1000,
       });
 
-      const returnedUserInfo = _.pick(foundUser, [
+      const returnedEmpInfo = _.pick(foundEmp, [
         "_id",
         "name",
         "username",
@@ -61,9 +67,9 @@ const loginUser = async (req, res) => {
         res,
         "Login Successful",
         {
-          ...returnedUserInfo,
+          ...returnedEmpInfo,
           token: accessToken,
-          role: getRoles.list[returnedUserInfo.role],
+          role: getRoles.list[returnedEmpInfo.role],
         },
         200
       );
@@ -73,4 +79,4 @@ const loginUser = async (req, res) => {
     sendResponse.error(res, error, "Error logging in", 500);
   }
 };
-module.exports = loginUser;
+module.exports = loginEmployee;

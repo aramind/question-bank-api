@@ -1,6 +1,5 @@
 const express = require("express");
 const authControllers = require("../controllers/auth/authControllers");
-const authValidator = require("../validators/authValidators");
 const verifyRoles = require("../middlewares/auth/verifyRoles");
 const verifyJWT = require("../middlewares/auth/verifyJWT");
 // const registerUserValidator = require("../validators/registerUserValidator");
@@ -12,7 +11,6 @@ const router = express.Router();
 // /v1/auth
 
 router.get("/refresh", authControllers.handleRefreshToken);
-router.post("/login", authValidator.loginValidator, authControllers.loginUser);
 router.post(
   "/register",
   verifyJWT,

@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const QUESTION_STATUSES = JSON.parse(process.env.QUESTION_STATUSES);
+const VERSIONS = JSON.parse(process.env.VERSIONS);
 
 const QuestionSchema = new Schema({
   code: { type: String, required: true, unique: true },
@@ -55,7 +56,12 @@ const QuestionSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  version: { type: String, required: true, enum: { values: VERSIONS } },
+  version: {
+    type: String,
+    required: true,
+    default: VERSIONS?.[0],
+    enum: { values: VERSIONS },
+  },
 });
 
 module.exports = mongoose.model("Question", QuestionSchema);

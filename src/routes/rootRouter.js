@@ -1,10 +1,10 @@
 const express = require("express");
-const authValidator = require("../validators/authValidators");
+const rootController = require("../controllers/root/rootController");
 const router = express.Router();
 // /v1/
 
 console.log("in root router");
 // routes
-router.post("/login");
+router.post("/login", rootController.loginEmployee);
 
 module.exports = router;
