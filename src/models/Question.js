@@ -1,60 +1,61 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const dotenv = require("dotenv");
+dotenv.config();
 
-const ChoiceSchema = new Schema({
-  value: { type: String, required: true },
-  isCorrect: { type: Boolean, required: true },
-});
+const QUESTION_STATUSES = JSON.parse(process.env.QUESTION_STATUSES);
 
-const EditorSchema = new Schema({
-  editor: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  editDate: { type: Date, required: true, default: Date.now },
-});
 const QuestionSchema = new Schema({
-  code: { type: String, required: true },
-  database: { type: String, required: true },
-  access: {
-    type: String,
-    enum: ["basic", "premium"],
-    default: "basic",
+  code: { type: String, required: true, unique: true },
+  access: { type: Number, default: 1, required: true },
+  level: { type: Number, default: 1, required: true },
+  difficulty: { type: Number, default: 1, required: true },
+  topics: [{ type: Schema.Types.ObjectId, ref: "Topic" }],
+  subjects: [{ type: Schema.Types.ObjectId, ref: "Subject" }],
+  courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
+  type: { type: String, required: true },
+
+  question: {
+    type: {
+      text: { type: String },
+      image: { type: String },
+    },
     required: true,
   },
-  courses: { type: [String], default: [], required: true },
-  subjects: { type: [String], default: [], required: true },
-  topics: { type: [String], default: [], required: true },
-  type: { type: String, required: true },
-  nature: { type: String, required: true },
-  difficulty: { type: Number, required: true },
-  question: { type: String, required: true },
-  choices: { type: [ChoiceSchema] },
-  information: { type: String },
+
+  choices: [
+    {
+      value: {
+        type: { text: { type: String }, image: { type: String } },
+        required: true,
+      },
+      isCorrect: { type: Boolean, required: true },
+    },
+  ],
+
+  information: {
+    type: { text: { type: String }, image: { type: String } },
+    required: true,
+  },
+
   tags: { type: [String], required: true },
   remarks: { type: String },
-  creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  editors: { type: [EditorSchema] },
+  creator: { type: Schema.Types.ObjectId, ref: "Employee", required: true },
+  editors: {
+    editor: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    editDate: { type: Date, required: true, default: Date.now },
+  },
   status: {
     type: String,
-    enum: ["pending", "approved", "deleted"],
-    default: "pending",
+    enum: QUESTION_STATUSES,
+    default: QUESTION_STATUSES?.[0],
     required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
-});
-
-QuestionSchema.pre("save", async function (next) {
-  try {
-    const existingQuestion = await mongoose.models.Question.findOne({
-      code: this.code,
-    });
-    if (existingQuestion) {
-      throw new Error("Questions has duplicate");
-    }
-  } catch (error) {
-    next(error);
-  }
+  version: { type: String, required: true, enum: { values: VERSIONS } },
 });
 
 module.exports = mongoose.model("Question", QuestionSchema);

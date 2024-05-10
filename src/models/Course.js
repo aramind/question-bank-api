@@ -12,7 +12,7 @@ const CourseSchema = new Schema({
   database: { type: String, required: true },
   description: { type: String, required: true },
   title: { type: String, required: true },
-  subjects: [{ type: Schema.Types.ObjectId, ref: "Question" }],
+  subjects: [{ type: Schema.Types.ObjectId, ref: "Subject" }],
   remarks: { type: String },
   isHidden: { type: Boolean, required: true, default: false },
 
