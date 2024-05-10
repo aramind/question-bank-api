@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const dotenv = require("dotenv");
+
 const getRoles = require("../utils/getRoles");
 const getStatuses = require("../utils/getStatuses");
+
+const dotenv = require("dotenv");
 dotenv.config();
 
 const VERSIONS = JSON.parse(process.env.VERSIONS);
