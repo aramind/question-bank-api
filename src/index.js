@@ -37,14 +37,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("combined"));
 
 // new routes
-app.use("/v1/employees", employeeRouter);
 app.use("/v1", rootRouter);
 // routers
 app.use("/auth", authRouter);
 app.use("/general", generalRouter);
 
 // routes needing auth
-// app.use(verifyJWT);
+app.use(verifyJWT);
+app.use("/v1/employees", employeeRouter);
+
 app.use("/v1/users", userRouter);
 app.use("/v1/courses", courseRouter);
 app.use("/v1/questions", questionRouter);
