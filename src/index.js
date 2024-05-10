@@ -10,7 +10,6 @@ const userRouter = require("./routes/userRouter");
 const courseRouter = require("./routes/courseRouter");
 const questionRouter = require("./routes/questionRouter");
 
-const generalRouter = require("./routes/generalRouter");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const verifyJWT = require("./middlewares/auth/verifyJWT");
@@ -38,9 +37,6 @@ app.use(morgan("combined"));
 
 // new routes
 app.use("/v1", rootRouter);
-// routers
-
-app.use("/general", generalRouter);
 
 // routes needing auth
 app.use(verifyJWT);
