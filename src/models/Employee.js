@@ -5,8 +5,9 @@ const getRoles = require("../utils/getRoles");
 const getStatuses = require("../utils/getStatuses");
 dotenv.config();
 
-const validRoles = getRoles.keys;
-const validStatuses = getStatuses.keys;
+const VERSIONS = JSON.parse(process.env.VERSIONS);
+const ROLES = getRoles.keys;
+const STATUSES = getStatuses.keys;
 
 console.log(validRoles);
 console.log(validStatuses);
@@ -34,12 +35,12 @@ const EmployeeSchema = new Schema({
   role: {
     type: String,
     required: true,
-    enum: { values: validRoles },
+    enum: { values: ROLES },
   },
   status: {
     type: String,
     required: true,
-    enum: { values: validStatuses },
+    enum: { values: STATUSES },
   },
   tokens: [{ name: { type: String }, value: { type: String } }],
   sessions: [
@@ -54,7 +55,7 @@ const EmployeeSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  version: { type: Number },
+  version: { type: String, required: true, enum: { values: VERSIONS } },
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
