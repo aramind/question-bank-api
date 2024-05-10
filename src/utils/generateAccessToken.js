@@ -3,8 +3,8 @@ const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const getRoles = require("./getRoles");
 
-const generateAccessToken = (foundUser) => {
-  const limitedUserInfo = _.pick(foundUser, [
+const generateAccessToken = (foundEmployee) => {
+  const selectedInfo = _.pick(foundEmployee, [
     "_id",
     "username",
     "employeeId",
@@ -13,13 +13,13 @@ const generateAccessToken = (foundUser) => {
     "status",
   ]);
 
-  const userInfo = {
-    ...limitedUserInfo,
-    role: getRoles.list[limitedUserInfo.role],
+  const employeeInfo = {
+    ...selectedInfo,
+    role: getRoles.list[selectedInfo.role],
   };
 
   const accessToken = jwt.sign(
-    { UserInfo: userInfo },
+    { UserInfo: employeeInfo },
     process.env.AUTH_ACCESS_TOKEN_SECRET,
     { expiresIn: process.env.AUTH_ACCESS_TOKEN_EXPIRY }
   );

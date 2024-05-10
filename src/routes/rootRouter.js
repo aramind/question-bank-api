@@ -6,5 +6,6 @@ const router = express.Router();
 console.log("in root router");
 // routes
 router.post("/login", rootController.loginEmployee);
+router.get("/refresh", rootController.refreshAccessToken);
 
 module.exports = router;

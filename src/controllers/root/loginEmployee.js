@@ -42,34 +42,36 @@ const loginEmployee = async (req, res) => {
       const accessToken = generateAccessToken(foundEmp);
       const refreshToken = generateRefreshToken(foundEmp);
 
-      foundEmp?.tokens?.push[{ refresh: refreshToken }];
+      foundEmp.refreshToken = refreshToken;
+
       const updateEmp = await foundEmp.save();
+      console.log(updateEmp);
+
+      console.log(updateEmp);
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
         sameSite: "None",
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
-        // maxAge: 15 * 1000,
-        // maxAge: 10 * 1000,
       });
 
-      const returnedEmpInfo = _.pick(foundEmp, [
-        "_id",
-        "name",
-        "username",
-        "role",
-        "status",
-        "employeeId",
-      ]);
+      // *use this in case more user info needs to be returned
+      // const returnedEmpInfo = _.pick(foundEmp, [
+      //   "_id",
+      //   "name",
+      //   "username",
+      //   "role",
+      //   "status",
+      //   "employeeId",
+      // ]);
 
-      // console.log("RES COKIE:", res.getHeaders());
       sendResponse.success(
         res,
         "Login Successful",
         {
-          ...returnedEmpInfo,
+          // ...returnedEmpInfo,
           token: accessToken,
-          role: getRoles.list[returnedEmpInfo.role],
+          role: getRoles.list[foundEmp.role],
         },
         200
       );

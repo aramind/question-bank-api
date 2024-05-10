@@ -33,6 +33,7 @@ const EmployeeSchema = new Schema({
     enum: { values: STATUSES },
   },
   tokens: [{ name: { type: String }, value: { type: String } }],
+  refreshToken: { type: String, default: "" },
   sessions: [
     { start: { type: Date, default: Date.now() }, end: { type: Date } },
   ],

@@ -57,12 +57,18 @@ const registerUser = async (req, res) => {
 
     const newUser = new User({
       email,
-      username,
       employeeId,
+      username,
+      password: await hashPassword(password),
+      name: { lastName, firstName, middleName },
       role,
       status,
-      name: { lastName, firstName, middleName },
-      password: await hashPassword(password),
+      tokens: [],
+      refreshToken: "",
+      sessions: [],
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      others: {},
     });
 
     const createdUser = await newUser.save();

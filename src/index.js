@@ -39,7 +39,7 @@ app.use(morgan("combined"));
 // new routes
 app.use("/v1", rootRouter);
 // routers
-app.use("/auth", authRouter);
+// app.use("/auth", authRouter);
 app.use("/general", generalRouter);
 
 // routes needing auth

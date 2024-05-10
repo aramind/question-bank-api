@@ -3,8 +3,8 @@ const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 // const getRoles = require("./getRoles");
 
-const generateRefreshToken = (foundUser) => {
-  const limitedUserInfo = _.pick(foundUser, [
+const generateRefreshToken = (foundEmployee) => {
+  const selectedInfo = _.pick(foundEmployee, [
     "_id",
     "email",
     "username",
@@ -17,7 +17,7 @@ const generateRefreshToken = (foundUser) => {
   // };
 
   const refreshToken = jwt.sign(
-    { UserInfo: limitedUserInfo },
+    { UserInfo: selectedInfo },
     process.env.AUTH_REFRESH_TOKEN_SECRET,
     { expiresIn: process.env.AUTH_REFRESH_TOKEN_EXPIRY }
   );
