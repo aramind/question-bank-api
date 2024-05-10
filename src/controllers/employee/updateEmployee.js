@@ -3,10 +3,12 @@ const { encrypt } = require("../../utils/securePassword");
 const sendResponse = require("../../utils/sendResponse");
 const updateEmployee = async (req, res) => {
   try {
-    const { id } = req?.params;
+    const { _id } = req?.params;
 
+    console.log(_id);
     const {
       employeeId,
+      username,
       lastName,
       firstName,
       middleName,
@@ -18,11 +20,12 @@ const updateEmployee = async (req, res) => {
 
     const updatedEmployee = await Employee.findOneAndUpdate(
       {
-        _id: id,
+        _id,
       },
       {
         $set: {
           employeeId,
+          username,
           "name.lastName": lastName,
           "name.firstName": firstName,
           "name.middleName": middleName,
