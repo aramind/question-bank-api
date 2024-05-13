@@ -13,6 +13,7 @@ router.get("/trimmed", courseController.getCourseByFields);
 // subjects
 router.post("/subjects", courseController.addSubject);
 router.get("/subjects/trimmed", courseController.getSubjectsByFields);
+router.get("/subjects", courseController.getSubjectsByFields);
 // topics
 router.post("/topics", courseController.addTopic);
 router.get("/topics/trimmed", courseController.getTopicsByFields);
