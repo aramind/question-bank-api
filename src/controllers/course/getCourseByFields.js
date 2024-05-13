@@ -10,7 +10,12 @@ const getCourseByFields = async (req, res) => {
     const courses = await Course.find({}, requestedFields.join(" "));
 
     if (courses) {
-      sendResponse.success(res, "Success retrieving courses", courses, 200);
+      return sendResponse.success(
+        res,
+        "Success retrieving courses",
+        courses,
+        200
+      );
     } else {
       sendResponse.failed(
         res,
