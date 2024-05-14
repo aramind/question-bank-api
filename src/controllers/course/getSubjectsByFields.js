@@ -6,14 +6,24 @@ const getSubjectsByFields = async (req, res) => {
     const requestedFields = req.query.fields ? req.query.fields.split(",") : "";
 
     const subjects = requestedFields
-      ? await Subject.find({}, requestedFields.join(" ")).populate({
-          path: "topics",
-          select: "_id acronym title description",
-        })
-      : await Subject.find({}).populate({
-          path: "topics",
-          select: "_id acronym title description",
-        });
+      ? await Subject.find({}, requestedFields.join(" "))
+          .populate({
+            path: "topics",
+            select: "_id acronym title description",
+          })
+          .populate({
+            path: "creator",
+            select: "name -_id", // Only select the name field from the creator
+          })
+      : await Subject.find({})
+          .populate({
+            path: "topics",
+            select: "_id acronym title description",
+          })
+          .populate({
+            path: "creator",
+            select: "name -_id", // Only select the name field from the creator
+          });
 
     if (!subjects) {
       return sendResponse.failed(res, "No subjects found", null, 404);

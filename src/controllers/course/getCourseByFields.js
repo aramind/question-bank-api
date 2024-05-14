@@ -9,14 +9,24 @@ const getCourseByFields = async (req, res) => {
 
     const courses =
       requestedFields?.length > 0
-        ? await Course.find({}, requestedFields.join(" ")).populate({
-            path: "subjects",
-            select: "_id acronym title description",
-          })
-        : await Course.find({}).populate({
-            path: "subjects",
-            select: "_id acronym title description",
-          });
+        ? await Course.find({}, requestedFields.join(" "))
+            .populate({
+              path: "subjects",
+              select: "_id acronym title description",
+            })
+            .populate({
+              path: "creator",
+              select: "name -_id",
+            })
+        : await Course.find({})
+            .populate({
+              path: "subjects",
+              select: "_id acronym title description",
+            })
+            .populate({
+              path: "creator",
+              select: "name -_id",
+            });
 
     if (!courses) {
       return sendResponse.failed(res, "No courses found", null, 404);
