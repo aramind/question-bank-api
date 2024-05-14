@@ -7,6 +7,7 @@ const addSubject = async (req, res) => {
     const { code, title } = req.body;
 
     const data = req.body;
+    const creator = req.userInfo?._id;
 
     console.log("DATA", data);
     const existingSubject = await Subject.findOne({
@@ -33,7 +34,11 @@ const addSubject = async (req, res) => {
     const validTopicIds = topicIds?.filter((id) => id);
 
     console.log(validTopicIds);
-    const newSubject = new Subject({ ...data, topics: validTopicIds });
+    const newSubject = new Subject({
+      ...data,
+      topics: validTopicIds,
+      creator: creator,
+    });
     const createdSubject = await newSubject.save();
 
     return sendResponse.success(

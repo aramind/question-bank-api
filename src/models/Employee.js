@@ -42,6 +42,7 @@ const EmployeeSchema = new Schema({
   sessions: [
     { start: { type: Date, default: Date.now() }, end: { type: Date } },
   ],
+  creator: { type: Schema.Types.ObjectId, ref: "Employee", required: true },
   createdAt: {
     type: Date,
     default: Date.now(),

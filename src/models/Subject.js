@@ -15,6 +15,11 @@ const SubjectSchema = new Schema({
     default: constants?.DOC_STATUSES?.[0],
     required: true,
   },
+  creator: { type: Schema.Types.ObjectId, ref: "Employee", required: true },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
   version: {
     type: String,
     required: true,

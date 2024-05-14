@@ -4,6 +4,7 @@ const addTopic = async (req, res) => {
   try {
     const { code, title } = req.body;
     const data = req.body;
+    const creator = req.userInfo?._id;
 
     const existing = await Topic.findOne({
       $or: [{ code }, { title }],
@@ -13,7 +14,7 @@ const addTopic = async (req, res) => {
       return sendResponse.failed(res, "Duplicate encountered.", null, 409);
     }
 
-    const newTopic = new Topic(data);
+    const newTopic = new Topic({ ...data, creator: creator });
     const createdTopic = await newTopic.save();
 
     return sendResponse.success(

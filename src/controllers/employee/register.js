@@ -8,6 +8,7 @@ const register = async (req, res) => {
 
   try {
     const emp = req?.body;
+    const creator = req.userInfo?._id;
     console.log(emp);
 
     const {
@@ -52,10 +53,16 @@ const register = async (req, res) => {
       role,
       status,
       version: CURRENT_VERSION,
+      creator: creator,
     });
 
     const createdUser = await newEmp.save();
-    return sendResponse.success(res, "User created successfully", newEmp, 201);
+    return sendResponse.success(
+      res,
+      "User created successfully",
+      createdUser,
+      201
+    );
   } catch (error) {
     console.error("Error adding user:", error);
     return sendResponse.error(res, error, "Error adding user", 500);

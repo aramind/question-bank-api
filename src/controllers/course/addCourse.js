@@ -3,11 +3,14 @@ const Subject = require("../../models/Subject");
 const sendResponse = require("../../utils/sendResponse");
 
 const addCourse = async (req, res) => {
+  console.log("add course controller");
   try {
     const { code, title } = req.body;
 
     const data = req.body;
-
+    const creator = req.userInfo?._id;
+    // console.log(req.userInfo);
+    // console.log(data);
     const existingCourse = await Course.findOne({
       $or: [{ code }, { title }],
     });
@@ -26,7 +29,11 @@ const addCourse = async (req, res) => {
 
     const validSubjectIds = subjectIds?.filter((id) => id);
 
-    const newCourse = new Course({ ...data, subjects: validSubjectIds });
+    const newCourse = new Course({
+      ...data,
+      subjects: validSubjectIds,
+      creator: creator,
+    });
 
     const createdCourse = await newCourse.save();
 
