@@ -8,7 +8,6 @@ const register = async (req, res) => {
 
   try {
     const emp = req?.body;
-    const creator = req.userInfo?._id;
     console.log(emp);
 
     const {
@@ -53,7 +52,6 @@ const register = async (req, res) => {
       role,
       status,
       version: CURRENT_VERSION,
-      creator: creator,
     });
 
     const createdUser = await newEmp.save();
