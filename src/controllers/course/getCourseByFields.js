@@ -7,23 +7,27 @@ const getCourseByFields = async (req, res) => {
     const requestedFields = req.query.fields ? req.query.fields.split(",") : [];
     console.log("FIELDS", requestedFields);
 
-    const courses = await Course.find({}, requestedFields.join(" "));
+    const courses =
+      requestedFields?.length > 0
+        ? await Course.find({}, requestedFields.join(" ")).populate({
+            path: "subjects",
+            select: "_id acronym title description",
+          })
+        : await Course.find({}).populate({
+            path: "subjects",
+            select: "_id acronym title description",
+          });
 
-    if (courses) {
-      return sendResponse.success(
-        res,
-        "Success retrieving courses",
-        courses,
-        200
-      );
-    } else {
-      sendResponse.failed(
-        res,
-        "Request returned empty list of courses",
-        [],
-        404
-      );
+    if (!courses) {
+      return sendResponse.failed(res, "No courses found", null, 404);
     }
+
+    return sendResponse.success(
+      res,
+      "Courses successfully retrieved",
+      courses,
+      200
+    );
   } catch (error) {
     sendResponse.error(res, error, "Error retrieving courses", 500);
   }
