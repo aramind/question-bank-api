@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const dotenv = require("dotenv");
+const constants = require("../config/constants");
 dotenv.config();
-
-const COURSE_STATUSES = JSON.parse(process.env.COURSE_STATUSES);
-const VERSIONS = JSON.parse(process.env.VERSIONS);
 
 const CourseSchema = new Schema({
   code: { type: String, required: true, unique: true },
@@ -18,8 +16,8 @@ const CourseSchema = new Schema({
 
   status: {
     type: String,
-    enum: COURSE_STATUSES,
-    default: COURSE_STATUSES?.[0],
+    enum: constants?.COURSE_STATUSES,
+    default: constants?.COURSE_STATUSES?.[0],
     required: true,
   },
   creator: { type: Schema.Types.ObjectId, ref: "Employee", required: true },
@@ -27,7 +25,12 @@ const CourseSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  version: { type: String, required: true, enum: { values: VERSIONS } },
+  version: {
+    type: String,
+    required: true,
+    default: constants.CURRENT_VERSION,
+    enum: { values: constants?.VERSIONS },
+  },
 });
 
 module.exports = mongoose.model("Course", CourseSchema);

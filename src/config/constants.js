@@ -9,6 +9,8 @@ const constants = {
   KEY: process.env.MAGIC_WORD,
   ROLES: getRoles.keys,
   STATUSES: getStatuses.keys,
+  COURSE_STATUSES: JSON.parse(process.env.COURSE_STATUSES),
+  QUESTION_STATUSES: JSON.parse(process.env.QUESTION_STATUSES),
 };
 
 module.exports = constants;
