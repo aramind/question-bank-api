@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
-const { VERSIONS, STATUSES, ROLES } = require("../config/constants");
+const {
+  VERSIONS,
+  STATUSES,
+  ROLES,
+  CURRENT_VERSION,
+} = require("../config/constants");
 const Schema = mongoose.Schema;
 
 const EmployeeSchema = new Schema({
@@ -45,7 +50,12 @@ const EmployeeSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  version: { type: String, required: true, enum: { values: VERSIONS } },
+  version: {
+    type: String,
+    required: true,
+    default: CURRENT_VERSION,
+    enum: { values: VERSIONS },
+  },
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

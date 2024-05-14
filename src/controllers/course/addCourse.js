@@ -1,21 +1,41 @@
 const Course = require("../../models/Course");
+const Subject = require("../../models/Subject");
 const sendResponse = require("../../utils/sendResponse");
 
 const addCourse = async (req, res) => {
   try {
-    const { code } = req.body;
-    const courseData = req.body;
-    const existingCourse = await Course.findOne({ code });
+    const { code, title } = req.body;
+
+    const data = req.body;
+
+    const existingCourse = await Course.findOne({
+      $or: [{ code }, { title }],
+    });
 
     if (existingCourse) {
       sendResponse.failed(res, "Course cannot have duplicate!", null, 409);
       return;
     }
 
-    const newCourse = new Course(courseData);
+    const subjectIds = await Promise.all(
+      data?.subjects?.map(async (title) => {
+        const subject = await Subject.findOne({ title: title });
+        return subject ? subject._id : null;
+      })
+    );
+
+    const validSubjectIds = subjectIds?.filter((id) => id);
+
+    const newCourse = new Course({ ...data, subjects: validSubjectIds });
+
     const createdCourse = await newCourse.save();
-    sendResponse.success(res, "Course added successfully", createdCourse, 201);
-    return createdCourse;
+
+    return sendResponse.success(
+      res,
+      "Course added successfully",
+      createdCourse,
+      201
+    );
   } catch (error) {
     console.log(error);
     sendResponse.failed(res, "Error adding course", error, 500);

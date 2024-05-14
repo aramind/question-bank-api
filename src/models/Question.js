@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const dotenv = require("dotenv");
+const constants = require("../config/constants");
 dotenv.config();
-
-const QUESTION_STATUSES = JSON.parse(process.env.QUESTION_STATUSES);
-const VERSIONS = JSON.parse(process.env.VERSIONS);
 
 const QuestionSchema = new Schema({
   code: { type: String, required: true, unique: true },
@@ -48,8 +46,8 @@ const QuestionSchema = new Schema({
   },
   status: {
     type: String,
-    enum: QUESTION_STATUSES,
-    default: QUESTION_STATUSES?.[0],
+    enum: constants?.DOC_STATUSES,
+    default: constants?.DOC_STATUSES?.[0],
     required: true,
   },
   createdAt: {
@@ -59,8 +57,8 @@ const QuestionSchema = new Schema({
   version: {
     type: String,
     required: true,
-    default: VERSIONS?.[0],
-    enum: { values: VERSIONS },
+    default: constants?.CURRENT_VERSION,
+    enum: { values: constants?.VERSIONS },
   },
 });
 

@@ -16,8 +16,8 @@ const CourseSchema = new Schema({
 
   status: {
     type: String,
-    enum: constants?.COURSE_STATUSES,
-    default: constants?.COURSE_STATUSES?.[0],
+    enum: constants?.DOC_STATUSES,
+    default: constants?.DOC_STATUSES?.[0],
     required: true,
   },
   creator: { type: Schema.Types.ObjectId, ref: "Employee", required: true },
