@@ -7,15 +7,20 @@ const router = express.Router();
 console.log("Course Router");
 router.use(verifyRoles(["super", "admin", "editor"]));
 
-router.post("", courseController.addCourse);
-router.get("/trimmed", courseController.getCourseByFields);
-
 // subjects
-router.post("/subjects", courseController.addSubject);
 router.get("/subjects/trimmed", courseController.getSubjectsByFields);
+router.post("/subjects", courseController.addSubject);
 router.get("/subjects", courseController.getSubjectsByFields);
+
 // topics
-router.post("/topics", courseController.addTopic);
+
 router.get("/topics/trimmed", courseController.getTopicsByFields);
+router.post("/topics", courseController.addTopic);
+router.patch("/topics/:_id", courseController.patchTopic);
+
+// general courses
+
+router.get("/trimmed", courseController.getCourseByFields);
+router.post("", courseController.addCourse);
 
 module.exports = router;
