@@ -7,7 +7,7 @@ const TopicSchema = new Schema({
   acronym: { type: String, required: true },
   title: { type: String, required: true, unique: true },
   description: { type: String },
-  questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
+  // questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
   isHidden: { type: Boolean, required: true, default: false },
   status: {
     type: String,
