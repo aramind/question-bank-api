@@ -15,6 +15,7 @@ const TopicSchema = new Schema({
     default: constants?.DOC_STATUSES?.[0],
     required: true,
   },
+  remarks: { type: String },
   creator: { type: Schema.Types.ObjectId, ref: "Employee", required: true },
   createdAt: {
     type: Date,

@@ -7,15 +7,23 @@ const getTopicsByFields = async (req, res) => {
 
     console.log(requestedFields);
 
-    const records = await Topic.find({}, requestedFields.join(" "));
+    const records = requestedFields
+      ? await Topic.find({}, requestedFields.join(" ")).populate({
+          path: "creator",
+          select: "name -_id",
+        })
+      : await Topic.find({}).populate({
+          path: "creator",
+          select: "name -_id",
+        });
 
     if (!records) {
-      return sendResponse.failed(res, "No record found", null, 404);
+      return sendResponse.failed(res, "No topics found", null, 404);
     }
 
     return sendResponse.success(
       res,
-      "Records successfully retrieved",
+      "Topics successfully retrieved",
       records,
       200
     );
