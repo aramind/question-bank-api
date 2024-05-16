@@ -6,6 +6,7 @@ dotenv.config();
 
 const QuestionSchema = new Schema({
   code: { type: String, required: true, unique: true },
+  database: { type: String, required: true },
   access: { type: Number, default: 1, required: true },
   level: { type: Number, default: 1, required: true },
   difficulty: { type: Number, default: 1, required: true },
@@ -36,7 +37,7 @@ const QuestionSchema = new Schema({
     type: { text: { type: String }, image: { type: String } },
     required: true,
   },
-
+  isHidden: { type: Boolean, required: true },
   tags: { type: [String], required: true },
   remarks: { type: String },
   creator: { type: Schema.Types.ObjectId, ref: "Employee", required: true },
