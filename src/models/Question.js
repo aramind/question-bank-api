@@ -37,12 +37,12 @@ const QuestionSchema = new Schema({
     type: { text: { type: String }, image: { type: String } },
     required: true,
   },
-  isHidden: { type: Boolean, required: true },
+  isHidden: { type: Boolean, required: true, default: false },
   tags: { type: [String], required: true },
   remarks: { type: String },
   creator: { type: Schema.Types.ObjectId, ref: "Employee", required: true },
   editors: {
-    editor: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    editor: { type: Schema.Types.ObjectId, ref: "User" },
     editDate: { type: Date, required: true, default: Date.now },
   },
   status: {

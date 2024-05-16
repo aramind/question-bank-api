@@ -1,10 +1,13 @@
 const sendResponse = require("../../utils/sendResponse");
 const Question = require("../../models/Question");
+
 const addQuestion = async (req, res) => {
   console.log("in add question controller");
+
   try {
     const { code } = req.body;
     const questionData = req.body;
+    const creator = req.userInfo?._id;
 
     // console.log(questionData);
     const existingQuestion = await Question.findOne({ code });
@@ -14,7 +17,7 @@ const addQuestion = async (req, res) => {
       return;
     }
 
-    const newQuestion = new Question(questionData);
+    const newQuestion = new Question({ ...questionData, creator: creator });
     const createdQuestion = await newQuestion.save();
     sendResponse.success(
       res,
