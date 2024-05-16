@@ -3,27 +3,18 @@ const sendResponse = require("../../utils/sendResponse");
 
 const getSubjectsByFields = async (req, res) => {
   try {
-    const requestedFields = req.query.fields ? req.query.fields.split(",") : "";
+    const reqFields = req.query.fields ? req.query.fields.split(",") : "";
+    const fields = reqFields?.length > 0 ? reqFields.join(" ") : "";
 
-    const subjects = requestedFields
-      ? await Subject.find({}, requestedFields.join(" "))
-          .populate({
-            path: "topics",
-            select: "_id acronym title description",
-          })
-          .populate({
-            path: "creator",
-            select: "name -_id", // Only select the name field from the creator
-          })
-      : await Subject.find({})
-          .populate({
-            path: "topics",
-            select: "_id acronym title description",
-          })
-          .populate({
-            path: "creator",
-            select: "name -_id", // Only select the name field from the creator
-          });
+    const subjects = await Subject.find({}, fields)
+      .populate({
+        path: "topics",
+        select: "_id acronym title description",
+      })
+      .populate({
+        path: "creator",
+        select: "name -_id", // Only select the name field from the creator
+      });
 
     if (!subjects) {
       return sendResponse.failed(res, "No subjects found", null, 404);
