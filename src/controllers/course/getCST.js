@@ -1,9 +1,9 @@
 const Course = require("../../models/Course");
 const sendResponse = require("../../utils/sendResponse");
 
-const getCourseByFields = async (req, res) => {
+const getCST = async (req, res) => {
   try {
-    console.log("Get course by fields controller");
+    console.log("CST controller");
     const requestedFields = req.query.fields ? req.query.fields.split(",") : [];
     console.log("FIELDS", requestedFields);
 
@@ -13,10 +13,6 @@ const getCourseByFields = async (req, res) => {
             .populate({
               path: "subjects",
               select: "_id acronym title description",
-              populate: {
-                path: "topics",
-                select: "_id acronym title description",
-              },
             })
             .populate({
               path: "creator",
@@ -26,10 +22,6 @@ const getCourseByFields = async (req, res) => {
             .populate({
               path: "subjects",
               select: "_id acronym title description",
-              populate: {
-                path: "topics",
-                select: "_id acronym title description",
-              },
             })
             .populate({
               path: "creator",
@@ -51,4 +43,4 @@ const getCourseByFields = async (req, res) => {
   }
 };
 
-module.exports = getCourseByFields;
+module.exports = getCST;
