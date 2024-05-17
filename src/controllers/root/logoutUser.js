@@ -2,7 +2,7 @@ const Employee = require("../../models/Employee");
 const sendResponse = require("../../utils/sendResponse");
 const clearCookie = (res, token) => {
   res.clearCookie("jwt", token, {
-    httpsOnly: true,
+    httpOnly: true,
     sameSite: "None",
     secure: true,
     maxAge: 24 * 60 * 60 * 1000,

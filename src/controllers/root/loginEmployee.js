@@ -49,7 +49,7 @@ const loginEmployee = async (req, res) => {
 
       console.log(updateEmp);
       res.cookie("jwt", refreshToken, {
-        httpsOnly: true,
+        httpOnly: true,
         sameSite: "None",
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
