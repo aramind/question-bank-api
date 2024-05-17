@@ -3,18 +3,18 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
-const employeeRouter = require("./routes/employeeRouter");
-const rootRouter = require("./routes/rootRouter");
-const userRouter = require("./routes/userRouter");
+const employeeRouter = require("./src/routes/employeeRouter");
+const rootRouter = require("./src/routes/rootRouter");
+const userRouter = require("./src/routes/userRouter");
 
-const courseRouter = require("./routes/courseRouter");
-const questionRouter = require("./routes/questionRouter");
+const courseRouter = require("./src/routes/courseRouter");
+const questionRouter = require("./src/routes/questionRouter");
 
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
-const verifyJWT = require("./middlewares/auth/verifyJWT");
-const credentials = require("./middlewares/auth/credentials");
-const corsOptions = require("./config/corsOptions");
+const verifyJWT = require("./src/middlewares/auth/verifyJWT");
+const credentials = require("./src/middlewares/auth/credentials");
+const corsOptions = require("./src/config/corsOptions");
 
 // env
 dotenv.config();
