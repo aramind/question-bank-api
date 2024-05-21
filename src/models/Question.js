@@ -6,12 +6,12 @@ dotenv.config();
 
 const QuestionSchema = new Schema({
   code: { type: String, required: true, unique: true },
-  database: { type: String, required: true },
+  // database: { type: String, required: true },
   access: { type: Number, default: 1, required: true },
   difficulty: { type: Number, default: 1, required: true },
   topics: [{ type: Schema.Types.ObjectId, ref: "Topic" }],
-  subjects: [{ type: Schema.Types.ObjectId, ref: "Subject" }],
-  courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
+  // subjects: [{ type: Schema.Types.ObjectId, ref: "Subject" }],
+  // courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
   type: { type: String, required: true },
 
   question: {
