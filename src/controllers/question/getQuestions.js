@@ -19,15 +19,11 @@ const getQuestions = async (req, res) => {
 
     const fields = reqFields?.length > 0 ? reqFields.join(" ") : "";
 
-    const commonSelect = "_id acronym title description";
-
     const questions = await Question.find(queryConditions, fields)
       .populate({
         path: "topics",
-        select: commonSelect,
+        select: "_id acronym title description",
       })
-      .populate({ path: "subjects", select: commonSelect })
-      .populate({ path: "courses", select: commonSelect })
       .populate({ path: "creator", select: "name -_id" });
 
     // const questions = await Question.find(params);
