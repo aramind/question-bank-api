@@ -7,7 +7,7 @@ console.log("Question Router");
 // /v1/questions
 
 // router.patch("/:questionId", questionController.patchQuestion);
-// router.get("", questionController.getQuestions);
+router.get("/trimmed", questionController.getQuestions);
 router.post("", questionController.addQuestion);
 
 module.exports = router;
