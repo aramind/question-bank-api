@@ -6,7 +6,7 @@ dotenv.config();
 
 const CourseSchema = new Schema({
   code: { type: String, required: true, unique: true },
-  acronym: { type: String, required: true },
+  acronym: { type: String },
   database: { type: String },
   description: { type: String },
   title: { type: String, required: true },

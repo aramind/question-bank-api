@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const SubjectSchema = new Schema({
   code: { type: String, required: true, unique: true },
-  acronym: { type: String, required: true },
+  acronym: { type: String },
   title: { type: String, required: true, unique: true },
   description: { type: String },
   topics: [{ type: Schema.Types.ObjectId, ref: "Topic" }],
