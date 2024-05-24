@@ -3,7 +3,7 @@ const Subject = require("../../models/Subject");
 const sendResponse = require("../../utils/sendResponse");
 
 const addCourse = async (req, res) => {
-  console.log("add course controller");
+  // console.log("add course controller");
   try {
     const { code, title } = req.body;
 

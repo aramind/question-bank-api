@@ -10,7 +10,7 @@ const addTopic = async (req, res) => {
       $or: [{ code }, { title }],
     });
 
-    console.log(existing);
+    // console.log(existing);
 
     if (existing) {
       return sendResponse.failed(res, "Duplicate encountered.", null, 409);

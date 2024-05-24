@@ -9,7 +9,7 @@ const addSubject = async (req, res) => {
     const data = req.body;
     const creator = req.userInfo?._id;
 
-    console.log("DATA", data);
+    // console.log("DATA", data);
     const existingSubject = await Subject.findOne({
       $or: [{ code }, { title }],
     });
@@ -30,10 +30,10 @@ const addSubject = async (req, res) => {
       })
     );
 
-    console.log(topicIds);
+    // console.log(topicIds);
     const validTopicIds = topicIds?.filter((id) => id);
 
-    console.log(validTopicIds);
+    // console.log(validTopicIds);
     const newSubject = new Subject({
       ...data,
       topics: validTopicIds,

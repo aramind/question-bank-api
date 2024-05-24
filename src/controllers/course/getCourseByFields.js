@@ -5,7 +5,7 @@ const getCourseByFields = async (req, res) => {
   try {
     console.log("Get course by fields controller");
     const requestedFields = req.query.fields ? req.query.fields.split(",") : [];
-    console.log("FIELDS", requestedFields);
+    // console.log("FIELDS", requestedFields);
 
     const courses =
       requestedFields?.length > 0

@@ -5,7 +5,7 @@ const getCST = async (req, res) => {
   try {
     console.log("CST controller");
     const requestedFields = req.query.fields ? req.query.fields.split(",") : [];
-    console.log("FIELDS", requestedFields);
+    // console.log("FIELDS", requestedFields);
 
     const courses =
       requestedFields?.length > 0
