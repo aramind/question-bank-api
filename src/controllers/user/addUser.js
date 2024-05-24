@@ -4,7 +4,7 @@ const sendResponse = require("../../utils/sendResponse");
 const addUser = async (req, res) => {
   try {
     // console.log(req.body);
-    console.log("REQ", req);
+
     const {
       email,
       username,

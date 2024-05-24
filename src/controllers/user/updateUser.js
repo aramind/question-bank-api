@@ -4,9 +4,8 @@ const sendResponse = require("../../utils/sendResponse");
 const updateUser = async (req, res) => {
   console.log("IN UPDATE CONTROLLER");
   try {
-    console.log(req);
     const employeeId = req.params.employeeId;
-    console.log("ID", employeeId);
+
     const {
       email,
       username,

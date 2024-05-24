@@ -45,9 +45,7 @@ const loginEmployee = async (req, res) => {
       foundEmp.refreshToken = refreshToken;
 
       const updateEmp = await foundEmp.save();
-      console.log(updateEmp);
 
-      console.log(updateEmp);
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
         sameSite: "None",

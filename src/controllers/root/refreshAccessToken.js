@@ -8,7 +8,6 @@ const getRoles = require("../../utils/getRoles");
 const refreshAccessToken = async (req, res) => {
   console.log("REFRESH TOKEN CONTROLLER");
   try {
-    console.log(req);
     const refreshToken = req.cookies?.jwt;
 
     if (!refreshToken) {

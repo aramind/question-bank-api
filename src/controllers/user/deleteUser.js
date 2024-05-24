@@ -5,10 +5,7 @@ const deleteUser = async (req, res) => {
   try {
     const employeeId = req.params.employeeId;
 
-    console.log(employeeId);
-
     const deletedUser = await User.findOneAndDelete({ employeeId });
-    console.log(deleteUser);
 
     sendResponse.success(res, "Successfully deleted user", deletedUser, 200);
   } catch (error) {

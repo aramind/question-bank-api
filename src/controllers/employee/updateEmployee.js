@@ -5,7 +5,6 @@ const updateEmployee = async (req, res) => {
   try {
     const { _id } = req?.params;
 
-    console.log(_id);
     const {
       employeeId,
       username,

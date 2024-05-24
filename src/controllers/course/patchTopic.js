@@ -8,15 +8,11 @@ const patchTopic = async (req, res) => {
 
     const data = req?.body;
 
-    console.log("ID", _id);
-    console.log("DATA", data);
-
     const updatedTopic = await Topic.findOneAndUpdate(
       { _id },
       { $set: data },
       { new: true }
     );
-    console.log("UT", updatedTopic);
 
     if (!updatedTopic) {
       return sendResponse.failed(
