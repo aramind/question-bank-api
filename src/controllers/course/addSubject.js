@@ -1,12 +1,12 @@
+const { default: mongoose } = require("mongoose");
 const Subject = require("../../models/Subject");
 const Topic = require("../../models/Topic");
 const sendResponse = require("../../utils/sendResponse");
 
 const addSubject = async (req, res) => {
   try {
-    const { code, title } = req.body;
+    const { code, title, topics, ...data } = req.body;
 
-    const data = req.body;
     const creator = req.userInfo?._id;
 
     // console.log("DATA", data);
@@ -23,19 +23,30 @@ const addSubject = async (req, res) => {
       );
     }
 
-    const topicIds = await Promise.all(
-      data?.topics?.map(async (topicName) => {
-        const topic = await Topic.findOne({ title: topicName });
-        return topic ? topic._id : null;
-      })
-    );
+    let validTopicIds = [];
 
-    // console.log(topicIds);
-    const validTopicIds = topicIds?.filter((id) => id);
+    if (mongoose.Types.ObjectId.isValid(topics[0])) {
+      // filter all valid topic ids in the topics provided
+      validTopicIds = topics.filter((topicId) =>
+        mongoose.Types.ObjectId.isValid(topicId)
+      );
+      // ensuring all provided topicIds are in db
+      const topicDocs = await Topic.find({ _id: { $in: validTopicIds } });
+      validTopicIds = topicDocs.map((topic) => topic._id);
+    } else {
+      const topicIds = await Promise.all(
+        data?.topics?.map(async (topicName) => {
+          const topic = await Topic.findOne({ title: topicName });
+          return topic ? topic._id : null;
+        })
+      );
+      validTopicIds = topicIds?.filter((id) => id);
+    }
 
-    // console.log(validTopicIds);
     const newSubject = new Subject({
       ...data,
+      code,
+      title,
       topics: validTopicIds,
       creator: creator,
     });
