@@ -4,12 +4,12 @@ const Topic = require("../../models/Topic");
 const sendResponse = require("../../utils/sendResponse");
 
 const addSubject = async (req, res) => {
+  console.log("ADD SUBJ CONTROLLER");
   try {
     const { code, title, topics, ...data } = req.body;
 
     const creator = req.userInfo?._id;
 
-    // console.log("DATA", data);
     const existingSubject = await Subject.findOne({
       $or: [{ code }, { title }],
     });
@@ -30,6 +30,7 @@ const addSubject = async (req, res) => {
       validTopicIds = topics.filter((topicId) =>
         mongoose.Types.ObjectId.isValid(topicId)
       );
+
       // ensuring all provided topicIds are in db
       const topicDocs = await Topic.find({ _id: { $in: validTopicIds } });
       validTopicIds = topicDocs.map((topic) => topic._id);
