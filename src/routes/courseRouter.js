@@ -11,6 +11,7 @@ router.use(verifyRoles(["super", "admin", "editor"]));
 router.get("/subjects/trimmed", courseController.getSubjectsByFields);
 router.post("/subjects", courseController.addSubject);
 router.get("/subjects", courseController.getSubjectsByFields);
+router.patch("/subjects/:_id", courseController.patchSubject);
 
 // topics
 
