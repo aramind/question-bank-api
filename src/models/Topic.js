@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 const TopicSchema = new Schema({
   code: { type: String, required: true, unique: true },
-  acronym: { type: String },
   title: { type: String, required: true, unique: true },
+  acronym: { type: String },
   description: { type: String },
   isHidden: { type: Boolean, required: true, default: false },
   status: {

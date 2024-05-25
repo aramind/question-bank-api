@@ -23,5 +23,6 @@ router.patch("/topics/:_id", courseController.patchTopic);
 
 router.get("/trimmed", courseController.getCourseByFields);
 router.post("", courseController.addCourse);
+router.patch("/:_id", courseController.patchCourse);
 
 module.exports = router;
