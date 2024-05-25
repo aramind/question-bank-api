@@ -24,7 +24,7 @@ const getQuestions = async (req, res) => {
         path: "topics",
         select: "_id acronym title description",
       })
-      .populate({ path: "creator", select: "name -_id" });
+      .populate({ path: "creator", select: "name _id" });
 
     // const questions = await Question.find(params);
 

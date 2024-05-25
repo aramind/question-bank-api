@@ -6,20 +6,20 @@ dotenv.config();
 
 const QuestionSchema = new Schema({
   code: { type: String, required: true, unique: true },
-  // database: { type: String, required: true },
+
   access: { type: Number, default: 1, required: true },
   difficulty: { type: Number, default: 1, required: true },
   topics: [{ type: Schema.Types.ObjectId, ref: "Topic" }],
-  // subjects: [{ type: Schema.Types.ObjectId, ref: "Subject" }],
-  // courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
   type: { type: String, required: true },
 
   question: {
     type: {
       text: { type: String },
       image: { type: String },
+      _id: false,
     },
     required: true,
+    _id: false,
   },
 
   choices: [
@@ -27,23 +27,29 @@ const QuestionSchema = new Schema({
       value: {
         type: { text: { type: String }, image: { type: String } },
         required: true,
+        _id: false,
       },
       isCorrect: { type: Boolean, required: true },
+      _id: false,
     },
   ],
 
   information: {
-    type: { text: { type: String }, image: { type: String } },
+    type: { text: { type: String }, image: { type: String }, _id: false },
     required: true,
+    _id: false,
   },
   isHidden: { type: Boolean, required: true, default: false },
   tags: { type: [String], required: true },
   remarks: { type: String },
   creator: { type: Schema.Types.ObjectId, ref: "Employee", required: true },
-  editors: {
-    editor: { type: Schema.Types.ObjectId, ref: "User" },
-    editDate: { type: Date, required: true, default: Date.now },
-  },
+  editors: [
+    {
+      editor: { type: Schema.Types.ObjectId, ref: "Employee" },
+      editDate: { type: Date },
+      _id: false,
+    },
+  ],
   status: {
     type: String,
     enum: constants?.DOC_STATUSES,
