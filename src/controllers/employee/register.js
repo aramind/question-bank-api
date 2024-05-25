@@ -8,7 +8,7 @@ const register = async (req, res) => {
 
   try {
     const emp = req?.body;
-    console.log(emp);
+    // console.log(emp);
 
     const {
       email,
