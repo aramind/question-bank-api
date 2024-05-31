@@ -8,6 +8,8 @@ const patchSubject = async (req, res) => {
 
     const data = req?.body;
 
+    console.log("DATA", data);
+
     const updatedSubject = await Subject.findOneAndUpdate(
       { _id },
       { $set: data },

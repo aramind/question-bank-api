@@ -10,5 +10,6 @@ router.post("/register", employeeController?.register);
 router.get("/:_id", employeeController?.getEmployees);
 router.patch("/:_id", employeeController?.updateEmployee);
 router.get("", employeeController?.getEmployees);
+router.delete("/:_id", employeeController.deleteEmployee);
 
 module.exports = router;
