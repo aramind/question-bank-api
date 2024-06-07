@@ -12,6 +12,7 @@ const clearCookie = (res, token) => {
 const onLogoutSuccess = (res) => {
   return sendResponse.success(res, "User logged out successfully", null, 204);
 };
+
 const logoutUser = async (req, res) => {
   console.log("in log out controller");
 

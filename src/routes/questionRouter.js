@@ -8,6 +8,7 @@ console.log("Question Router");
 
 router.patch("/:questionId", questionController.patchQuestion);
 router.get("/trimmed", questionController.getQuestions);
+router.get("/count", questionController.getQuestionsCount);
 router.get("/tags", questionController.getAllTags);
 router.post("", questionController.addQuestion);
 
