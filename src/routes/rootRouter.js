@@ -8,5 +8,6 @@ console.log("in root router");
 router.post("/login", rootController.loginEmployee);
 router.delete("/logout", rootController.logoutUser);
 router.get("/refresh", rootController.refreshAccessToken);
+router.get("/counts", rootController.getCounts);
 
 module.exports = router;
