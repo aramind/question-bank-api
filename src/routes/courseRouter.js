@@ -3,6 +3,7 @@ const courseController = require("../controllers/course/courseController");
 const verifyRoles = require("../middlewares/auth/verifyRoles");
 const Subject = require("../models/Subject");
 const Course = require("../models/Course");
+const Topic = require("../models/Topic");
 const router = express.Router();
 
 // base API: /v1/courses
@@ -25,6 +26,10 @@ router.patch("/subjects/:_id", courseController.patchSubject);
 router.get("/topics/trimmed", courseController.getTopicsByFields);
 router.get("/topics/count", courseController.getTopicsCount);
 router.post("/topics", courseController.addTopic);
+router.patch(
+  "/topics/simpleUpdate/:_id",
+  courseController.doSimpleUpdate(Topic)
+);
 router.patch("/topics/:_id", courseController.patchTopic);
 
 // general courses
