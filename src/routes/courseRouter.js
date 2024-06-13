@@ -1,6 +1,8 @@
 const express = require("express");
 const courseController = require("../controllers/course/courseController");
 const verifyRoles = require("../middlewares/auth/verifyRoles");
+const Subject = require("../models/Subject");
+const Course = require("../models/Course");
 const router = express.Router();
 
 // base API: /v1/courses
@@ -12,6 +14,10 @@ router.get("/subjects/trimmed", courseController.getSubjectsByFields);
 router.get("/subjects/count", courseController.getSubjectsCount);
 router.post("/subjects", courseController.addSubject);
 router.get("/subjects", courseController.getSubjectsByFields);
+router.patch(
+  "/subjects/simpleUpdate/:_id",
+  courseController.doSimpleUpdate(Subject)
+);
 router.patch("/subjects/:_id", courseController.patchSubject);
 
 // topics
@@ -27,7 +33,7 @@ router.get("/trimmed", courseController.getCourseByFields);
 router.get("/count", courseController.getCoursesCount);
 router.post("", courseController.addCourse);
 
-router.patch("/simpleUpdate/:_id", courseController.doSimpleUpdate);
+router.patch("/simpleUpdate/:_id", courseController.doSimpleUpdate(Course));
 router.patch("/:_id", courseController.patchCourse);
 
 module.exports = router;

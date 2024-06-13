@@ -1,7 +1,6 @@
 const addCourse = require("./addCourse");
 const addSubject = require("./addSubject");
 const addTopic = require("./addTopic");
-const doSimpleUpdate = require("./doSimpleUpdate");
 const getCourseByFields = require("./getCourseByFields");
 const getCoursesCount = require("./getCoursesCount");
 const getSubjectsByFields = require("./getSubjectsByFields");
@@ -11,6 +10,7 @@ const getTopicsCount = require("./getTopicsCount");
 const patchCourse = require("./patchCourse");
 const patchSubject = require("./patchSubject");
 const patchTopic = require("./patchTopic");
+const doSimpleUpdate = require("./doSimpleUpdate");
 
 const courseController = {
   addCourse,
@@ -18,7 +18,6 @@ const courseController = {
   getCoursesCount,
   patchCourse,
   doSimpleUpdate,
-
   // subjects
   addSubject,
   getSubjectsByFields,

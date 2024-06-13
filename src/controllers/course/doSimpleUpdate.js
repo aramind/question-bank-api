@@ -1,17 +1,21 @@
 const sendResponse = require("../../utils/sendResponse");
 
-const doSimpleUpdate = (Model) => async (req, res) => {
+const doSimpleUpdate = (model) => async (req, res) => {
+  console.log("in simpleupdate controller");
+
   try {
     const { _id } = req?.params;
     const data = req?.body;
 
-    const updated = await Model.findOneAndUpdate(
+    console.log(_id);
+    console.log(data);
+    const updated = await model.findOneAndUpdate(
       { _id },
       { $set: { ...data } },
       { new: true }
     );
 
-    if (!updatedCourse) {
+    if (!updated) {
       return sendResponse.failed(res, "Update failed", null, 404);
     }
 
