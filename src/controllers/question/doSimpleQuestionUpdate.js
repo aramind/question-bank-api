@@ -8,8 +8,6 @@ const doSimpleQuestionUpdate = () => async (req, res) => {
     const { _id } = req?.params;
     const data = req?.body;
 
-    console.log(_id);
-    console.log(data);
     const updated = await Question.findOneAndUpdate(
       { _id },
       { $set: { ...data } },
