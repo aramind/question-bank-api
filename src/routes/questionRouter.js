@@ -6,6 +6,7 @@ const router = express.Router();
 console.log("Question Router");
 // /v1/questions
 
+router.patch("/simpleUpdate/:_id", questionController.doSimpleQuestionUpdate);
 router.patch("/:questionId", questionController.patchQuestion);
 router.get("/trimmed", questionController.getQuestions);
 router.get("/count", questionController.getQuestionsCount);
