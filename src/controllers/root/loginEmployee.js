@@ -52,20 +52,20 @@ const loginEmployee = async (req, res) => {
       });
 
       // *use this in case more user info needs to be returned
-      // const returnedEmpInfo = _.pick(foundEmp, [
-      //   "_id",
-      //   "name",
-      //   "username",
-      //   "role",
-      //   "status",
-      //   "employeeId",
-      // ]);
+      const returnedEmpInfo = _.pick(foundEmp, [
+        // "_id",
+        "name",
+        // "username",
+        // "role",
+        // "status",
+        // "employeeId",
+      ]);
 
       sendResponse.success(
         res,
         "Login Successful",
         {
-          // ...returnedEmpInfo,
+          ...returnedEmpInfo,
           token: accessToken,
           role: getRoles.list[foundEmp.role],
         },
