@@ -2,13 +2,10 @@ const Subject = require("../../models/Subject");
 const sendResponse = require("../../utils/sendResponse");
 
 const patchSubject = async (req, res) => {
-  console.log("in PATCH SUBJECT CONTROLLER");
   try {
     const { _id } = req?.params;
 
     const data = req?.body;
-
-    console.log("DATA", data);
 
     const updatedSubject = await Subject.findOneAndUpdate(
       { _id },

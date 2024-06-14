@@ -9,8 +9,6 @@ const getRoles = require("../../utils/getRoles");
 require("dotenv").config();
 
 const loginEmployee = async (req, res) => {
-  console.log("in login controller");
-  console.log(req?.body);
   try {
     // const result = validationResult(req);
 

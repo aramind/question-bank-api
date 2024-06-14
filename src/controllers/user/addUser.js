@@ -21,7 +21,7 @@ const addUser = async (req, res) => {
 
     if (existingUser) {
       sendResponse.failed(res, "User already existed!");
-      console.log("User already existed!");
+
       return;
     }
 

@@ -20,7 +20,6 @@ const getSubjectsByFields = async (req, res) => {
       return sendResponse.failed(res, "No subjects found", null, 404);
     }
 
-    console.log(subjects);
     return sendResponse.success(
       res,
       "Subjects successfully retrieved",
