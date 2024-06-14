@@ -1,7 +1,7 @@
 const sendResponse = require("../../utils/sendResponse");
 const Question = require("../../models/Question");
 
-const doSimpleQuestionUpdate = () => async (req, res) => {
+const doSimpleQuestionUpdate = async (req, res) => {
   console.log("in question simple update controller");
 
   try {
