@@ -23,14 +23,14 @@ const refreshAccessToken = async (req, res) => {
     }
 
     // *use this in case more user info needs to be returned
-    // const returnedEmployeeInfo = _.pick(foundEmployee, [
-    //   "_id",
-    //   "name",
-    //   "username",
-    //   "role",
-    //   "status",
-    //   "employeeId",
-    // ]);
+    const returnedEmployeeInfo = _.pick(foundEmployee, [
+      // "_id",
+      "name",
+      // "username",
+      // "role",
+      // "status",
+      // "employeeId",
+    ]);
 
     jwt.verify(
       refreshToken,
@@ -46,7 +46,7 @@ const refreshAccessToken = async (req, res) => {
             res,
             "Token refreshed.",
             {
-              //   ...returnedEmployeeInfo,
+              ...returnedEmployeeInfo,
               token: generateAccessToken(foundEmployee),
               role: getRoles.list[foundEmployee.role],
             },

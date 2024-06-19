@@ -4,9 +4,10 @@ const sendResponse = require("../../utils/sendResponse");
 const getSubjectsByFields = async (req, res) => {
   try {
     const reqFields = req.query.fields ? req.query.fields.split(",") : "";
-    const fields = reqFields?.length > 0 ? reqFields.join(" ") : "";
+    const joinedFields = reqFields?.length > 0 ? reqFields.join(" ") : "";
 
-    const subjects = await Subject.find({}, fields)
+    const { fields, ...queryParams } = req.query;
+    const subjects = await Subject.find(queryParams, joinedFields)
       .populate({
         path: "topics",
         select: "_id acronym title description",

@@ -5,14 +5,15 @@ const getTopicsByFields = async (req, res) => {
   try {
     const requestedFields = req.query.fields ? req.query.fields.split(",") : [];
 
-    // console.log(requestedFields);
+    const { fields, ...queryParams } = req.query;
+    console.log("QUERY", queryParams);
 
     const records = requestedFields
-      ? await Topic.find({}, requestedFields.join(" ")).populate({
+      ? await Topic.find(queryParams, requestedFields.join(" ")).populate({
           path: "creator",
           select: "name -_id",
         })
-      : await Topic.find({}).populate({
+      : await Topic.find(queryParams).populate({
           path: "creator",
           select: "name -_id",
         });
