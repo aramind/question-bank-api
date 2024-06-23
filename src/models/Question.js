@@ -39,6 +39,9 @@ const QuestionSchema = new Schema({
     required: true,
     _id: false,
   },
+  source: {
+    type: [String],
+  },
   isHidden: { type: Boolean, required: true, default: false },
   tags: { type: [String], required: true },
   remarks: { type: String },
