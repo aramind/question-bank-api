@@ -6,7 +6,7 @@ const getTopicsByFields = async (req, res) => {
     const requestedFields = req.query.fields ? req.query.fields.split(",") : [];
 
     const { fields, ...queryParams } = req.query;
-    console.log("QUERY", queryParams);
+    // console.log("QUERY", queryParams);
 
     const records = requestedFields
       ? await Topic.find(queryParams, requestedFields.join(" ")).populate({

@@ -6,20 +6,19 @@ const getQuestions = async (req, res) => {
 
   try {
     const dynamicRouteParams = { ...req.params };
-    const dynamicQueryParams = { ...req.query };
+    const { fields, ...dynamicQueryParams } = req.query;
+    // const dynamicQueryParams = { ...req.query };
 
-    const reqFields = dynamicQueryParams?.fields
-      ? dynamicQueryParams?.fields.split(",")
-      : [];
+    const reqFields = fields ? fields.split(",") : [];
 
     const params = { ...dynamicRouteParams, ...dynamicQueryParams };
 
     const queryConditions =
       typeof params === "object" && params !== null ? params : {};
 
-    const fields = reqFields?.length > 0 ? reqFields.join(" ") : "";
+    const joinedFields = reqFields?.length > 0 ? reqFields.join(" ") : "";
 
-    const questions = await Question.find(queryConditions, fields)
+    const questions = await Question.find(queryConditions, joinedFields)
       .populate({
         path: "topics",
         select: "_id acronym title description",

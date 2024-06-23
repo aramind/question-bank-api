@@ -1,5 +1,6 @@
 const addQuestion = require("./addQuestion");
 const doSimpleQuestionUpdate = require("./doSimpleQuestionUpdate");
+const getAllSources = require("./getAllSources");
 const getAllTags = require("./getAllTags");
 const getQuestions = require("./getQuestions");
 const getQuestionsCount = require("./getQuestionsCount");
@@ -10,6 +11,7 @@ const questionController = {
   getQuestions,
   patchQuestion,
   getAllTags,
+  getAllSources,
   getQuestionsCount,
   doSimpleQuestionUpdate,
 };
