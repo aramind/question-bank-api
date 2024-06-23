@@ -39,7 +39,7 @@ const QuestionSchema = new Schema({
     required: true,
     _id: false,
   },
-  source: {
+  sources: {
     type: [String],
   },
   isHidden: { type: Boolean, required: true, default: false },
