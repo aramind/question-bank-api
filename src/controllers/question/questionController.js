@@ -1,3 +1,4 @@
+const addBulkQuestions = require("./addBulkQuestions");
 const addQuestion = require("./addQuestion");
 const doSimpleQuestionUpdate = require("./doSimpleQuestionUpdate");
 const getAllSources = require("./getAllSources");
@@ -14,6 +15,7 @@ const questionController = {
   getAllSources,
   getQuestionsCount,
   doSimpleQuestionUpdate,
+  addBulkQuestions,
 };
 
 module.exports = questionController;
